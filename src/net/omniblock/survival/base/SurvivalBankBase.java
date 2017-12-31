@@ -98,4 +98,26 @@ public class SurvivalBankBase {
 
 	}
 	
+	public static void removeMoney(Player player, int quantity) {
+
+		removeMoney(player.getName(), quantity, false);
+		return;
+
+	}
+
+	public static void removeMoney(String name, int quantity) {
+
+		removeMoney(name, quantity, false);
+		return;
+
+	}
+	
+	public static void removeMoney(String param, int quantity, boolean isNetworkID) {
+
+		int money = getMoney(param, isNetworkID);
+		setMoney(param, (money - quantity < 0) ? 0 : money - quantity, isNetworkID);
+		return;
+
+	}
+	
 }
