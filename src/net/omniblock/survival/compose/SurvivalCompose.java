@@ -18,6 +18,14 @@ public interface SurvivalCompose {
 		return LOCS.getLocation(id);
 	}
 	
+	public static Location getLocation(String worldid, double x, double y, double z) {
+		return new Location(getWorld(worldid), x, y, z);
+	}
+	
+	public static Location getLocation(String worldid, double x, double y, double z, float yaw, float pitch) {
+		return new Location(getWorld(worldid), x, y, z, yaw, pitch);
+	}
+	
 	public static void compose() {
 		
 		WORLDS.load();
