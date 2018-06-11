@@ -7,25 +7,25 @@ import net.omniblock.survival.SurvivalPlugin;
 
 public final class Platform {
 
-	public static void runLater(Task runLater, int delay) {
+	public static void runLater(Task task, int delay) {
 
 		new BukkitRunnable() {
 
 			@Override
 			public void run() {
-				runLater.start();
+				task.start();
 				return;
 			}
 
 		}.runTaskLater(SurvivalPlugin.getInstance(), delay * 20L);
 	}
 	
-	public static BukkitTask runTimer(Task runLater, int delay) {
+	public static BukkitTask runTimer(Task task, int delay) {
 		return new BukkitRunnable() {
 
 			@Override
 			public void run() {
-				runLater.start();
+				task.start();
 				return;
 			}
 
