@@ -29,7 +29,7 @@ public final class Platform {
 				return;
 			}
 
-		}.runTaskTimer(SurvivalPlugin.getInstance(), 5L, delay*20L);
+		}.runTaskTimer(SurvivalPlugin.getInstance(), 0L, delay*20L);
 	}
 
 	public interface Task {
