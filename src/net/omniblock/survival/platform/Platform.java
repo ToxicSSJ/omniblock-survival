@@ -17,7 +17,7 @@ public final class Platform {
 				return;
 			}
 
-		}.runTaskLater(SurvivalPlugin.getInstance(), delay * 20L);
+		}.runTaskLater(SurvivalPlugin.getInstance(), delay);
 	}
 	
 	public static BukkitTask runTimer(Task task, int delay) {
@@ -29,7 +29,7 @@ public final class Platform {
 				return;
 			}
 
-		}.runTaskTimer(SurvivalPlugin.getInstance(), 0L, delay*20L);
+		}.runTaskTimer(SurvivalPlugin.getInstance(), 0L, delay);
 	}
 
 	public interface Task {
