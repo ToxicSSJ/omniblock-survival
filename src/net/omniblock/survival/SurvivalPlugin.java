@@ -5,7 +5,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.omniblock.network.handlers.Handlers;
 import net.omniblock.network.handlers.network.NetworkManager;
 import net.omniblock.packets.object.external.ServerType;
-import net.omniblock.survival.compose.SurvivalCompose;
 
 public class SurvivalPlugin extends JavaPlugin {
 
@@ -26,7 +25,6 @@ public class SurvivalPlugin extends JavaPlugin {
 		
 		Handlers.LOGGER.sendModuleInfo("&7Se ha registrado Survival v" + this.getDescription().getVersion() + "!");
 		
-		SurvivalCompose.compose();
 		SurvivalListener.listen();
 		
 		Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival correctamente!");
