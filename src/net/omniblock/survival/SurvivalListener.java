@@ -6,6 +6,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.network.systems.ActionsPatcher;
+import net.omniblock.survival.utils.WorldUtils;
 
 public class SurvivalListener {
 
@@ -18,7 +19,7 @@ public class SurvivalListener {
 			@EventHandler
 			public void onJoin(PlayerJoinEvent e) {
 				
-				//e.getPlayer().teleport(SurvivalCompose.getLocation("spawn"));
+				e.getPlayer().teleport(WorldUtils.getLocation("PlainsTwo", -67, 63, 151));
 				
 				e.getPlayer().sendMessage(new String[] {
 						
