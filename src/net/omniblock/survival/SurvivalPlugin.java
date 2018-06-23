@@ -26,6 +26,8 @@ public class SurvivalPlugin extends JavaPlugin {
 		Handlers.LOGGER.sendModuleInfo("&7Se ha registrado Survival v" + this.getDescription().getVersion() + "!");
 		
 		SurvivalListener.listen();
+		SurvivalManager.setup();
+		
 		
 		Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival correctamente!");
 		

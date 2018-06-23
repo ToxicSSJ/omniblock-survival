@@ -5,6 +5,14 @@ import org.bukkit.scheduler.BukkitTask;
 
 import net.omniblock.survival.SurvivalPlugin;
 
+/**
+ * 
+ * Clase encargada de ejecutar alguna 
+ * tarea, mediante un bukkit runnable.
+ * 
+ * @author Luis Villegas
+ *
+ */
 public final class Platform {
 
 	public static void runLater(Task task, int delay) {

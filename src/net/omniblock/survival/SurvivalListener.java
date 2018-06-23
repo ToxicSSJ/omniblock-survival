@@ -6,8 +6,17 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.network.systems.ActionsPatcher;
-import net.omniblock.survival.utils.WorldUtils;
 
+
+/**
+ * 
+ * Con esta clase se registran todos
+ * los eventos del survival.
+ * 
+ * 
+ * @author Luis Villegas
+ *
+ */
 public class SurvivalListener {
 
 	public static void listen() {
@@ -19,8 +28,8 @@ public class SurvivalListener {
 			@EventHandler
 			public void onJoin(PlayerJoinEvent e) {
 				
-				e.getPlayer().teleport(WorldUtils.getLocation("PlainsTwo", -67, 63, 151));
-				
+				e.getPlayer().teleport(SurvivalManager.getLocation());
+			
 				e.getPlayer().sendMessage(new String[] {
 						
 						TextUtil.getCenteredMessage("&8---------------------------------------------------"),
