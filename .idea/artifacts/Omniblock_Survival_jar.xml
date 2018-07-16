@@ -3,6 +3,8 @@
     <output-path>$PROJECT_DIR$/../CompiledJars</output-path>
     <root id="archive" name="Survival.jar">
       <element id="module-output" name="Omniblock-Survival" />
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="dir-copy" path="$PROJECT_DIR$/data" />
     </root>
   </artifact>
 </component>

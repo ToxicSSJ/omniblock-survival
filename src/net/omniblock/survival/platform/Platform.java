@@ -15,9 +15,9 @@ import net.omniblock.survival.SurvivalPlugin;
  */
 public final class Platform {
 
-	public static void runLater(Task task, int delay) {
+	public static BukkitTask runLater(Task task, int delay) {
 
-		new BukkitRunnable() {
+		return new BukkitRunnable() {
 
 			@Override
 			public void run() {

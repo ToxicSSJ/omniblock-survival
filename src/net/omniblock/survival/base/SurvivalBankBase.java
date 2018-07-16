@@ -24,7 +24,7 @@ public class SurvivalBankBase {
 
 	/**
 	 * 
-	 * Metodo estático para obtener el dinero
+	 * Metodo estï¿½tico para obtener el dinero
 	 * de un jugador. 
 	 * 
 	 * @param player Jugador
@@ -37,7 +37,7 @@ public class SurvivalBankBase {
 
 	/**
 	 * 
-	 * Metodo estático para obtener el dinero
+	 * Metodo estï¿½tico para obtener el dinero
 	 * de un jugador, mediante su nombre.
 	 * 
 	 * @param name Nombre del jugador. 
@@ -50,7 +50,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo estático para obtener el dinero
+	 * Metodo estï¿½tico para obtener el dinero
 	 * de un jugador, mediante su NetworkID
 	 * 
 	 * @param param Nombre del jugador.
@@ -80,7 +80,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo estático para dar dinero
+	 * Metodo estï¿½tico para dar dinero
 	 * a un jugador.
 	 * 
 	 * @param player Jugador al cual se le dara el dinero.
@@ -95,7 +95,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo estático para dar dinero a
+	 * Metodo estï¿½tico para dar dinero a
 	 * un jugador, usando su nombre
 	 * 
 	 * @param name Nombre del jugador.
@@ -110,7 +110,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo estático  para dar dinero a 
+	 * Metodo estï¿½tico  para dar dinero a 
 	 * un jugador, usando la NetworkID.
 	 * 
 	 * @param param Nombre del jugador.
@@ -139,7 +139,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo para añadir dinero a un jugaor
+	 * Metodo para aï¿½adir dinero a un jugaor
 	 * 
 	 * @param player Jugador.
 	 * @param quantity Cantidad.
@@ -153,7 +153,7 @@ public class SurvivalBankBase {
 
 	/**
 	 * 
-	 * Metodo estático para añadir dinero a
+	 * Metodo estï¿½tico para aï¿½adir dinero a
 	 * un jugador, usando su nombre.
 	 * 
 	 * @param name Nombre del jugador.
@@ -168,7 +168,7 @@ public class SurvivalBankBase {
 	
 	/**
 	 * 
-	 * Metodo estático  para añadir dinero a 
+	 * Metodo estatico  para aÃ±adir dinero a
 	 * un jugador, usando la NetworkID.
 	 * 
 	 * @param param Nombre del jugador.
