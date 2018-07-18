@@ -13,3 +13,11 @@ commands:
       description: Comando para volver al lobby principal.
    spawn:
       description: Comando para volver al spawn.
+   tpa:
+      description: Comando para teletransportarte a otro jugador.
+   tpaccept:
+      description: Comando para aceptar petición de tpa.
+   tpdeny:
+      description: Comando para denegar petición de tpa.
+   back:
+      description: Comando para regresar a una posición previa.

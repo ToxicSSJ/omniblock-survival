@@ -1,6 +1,5 @@
 package net.omniblock.survival;
 
-import net.omniblock.survival.systems.SurvivalCommands;
 import net.omniblock.survival.systems.SurvivalListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +28,6 @@ public class SurvivalPlugin extends JavaPlugin {
 
 		SurvivalListener.listen();
 		SurvivalManager.setup();
-		SurvivalCommands.commands();
 
 		Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival correctamente!");
 

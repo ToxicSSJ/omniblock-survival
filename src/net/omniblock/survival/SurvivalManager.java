@@ -8,8 +8,9 @@ import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.shop.systems.MysteryBoxHandler;
 import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.systems.SurvivalBox;
+import net.omniblock.survival.systems.commands.Back;
+import net.omniblock.survival.systems.commands.Tpa;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.World;
 
 import net.omniblock.network.library.utils.LocationUtils;
@@ -83,17 +84,26 @@ public class SurvivalManager {
 
 
 		SurvivalExecutor executor = new SurvivalExecutor();
-		String[] commands = new String[]{
+        String[] commands = new String[]{
 				"dinero",
 				"money",
 				"spawn",
 				"lobby",
 				"hub"
 		};
+        String[] tpaCommands = new String[]{
+                "tpa",
+                "tpaccept",
+                "tpdeny"
+        };
 
-		for (String command : commands)
+        for (String command : commands)
 			SurvivalPlugin.getInstance().getCommand(command).setExecutor(new SurvivalExecutor());
 
+		for(String tpaCommand : tpaCommands)
+            SurvivalPlugin.getInstance().getCommand(tpaCommand).setExecutor(new Tpa());
+
+        SurvivalPlugin.getInstance().getCommand("back").setExecutor(new Back());
 
 		survivalBox = new SurvivalBox();
 		MysteryBoxHandler.register(survivalBox);
