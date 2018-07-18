@@ -2,17 +2,14 @@ name: Survival
 main: net.omniblock.survival.SurvivalPlugin
 softdepend: [OmniNetwork, OmniRegions, ShopHandler]
 version: 1.1.0
-
 commands:
-  tpa:
-    usage: /<command>
-    description: usa /tpa [player] para tpearte con él
-  tpacept:
-    usage: /<command>
-    description: aceptar peticiones de tp
-  tpdeny:
-    usage: /<command>
-    description: denegar peticiones de tp
-  back:
-    usage: /<command>
-    description: regresar a una locación previa
+   dinero:
+      description: Comando para ver tu dinero.
+   money:
+      description: Comando para ver tu dinero.
+   lobby:
+      description: Comando para volver al lobby principal.
+   hub:
+      description: Comando para volver al lobby principal.
+   spawn:
+      description: Comando para volver al spawn.
