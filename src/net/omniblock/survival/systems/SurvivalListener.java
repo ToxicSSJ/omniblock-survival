@@ -2,6 +2,7 @@ package net.omniblock.survival.systems;
 
 import net.omniblock.survival.SurvivalManager;
 import net.omniblock.survival.SurvivalPlugin;
+import net.omniblock.survival.systems.commands.Back;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -58,12 +59,16 @@ public class SurvivalListener {
 
 						});
 
+						Back.addPlayerLocation(e.getPlayer());
+
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);
 
 			}
 			
 		}, SurvivalPlugin.getInstance());
+
+		SurvivalPlugin.getInstance().getServer().getPluginManager().registerEvents(new Back(), SurvivalPlugin.getInstance());
 		
 	}
 	
