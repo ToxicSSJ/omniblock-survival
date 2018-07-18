@@ -114,6 +114,8 @@ public class Tpa implements CommandExecutor {
                             inicialPos.getZ() != requestedPlayer.getLocation().getZ()){
 
                         requestedPlayer.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
+                        player.sendMessage(TextUtil.format("&c"+requestedPlayer.getName() +
+                                "&e se ha movido durante el teletransporte y se ha cancelado."));
                         cancel();
                         return;
                     }

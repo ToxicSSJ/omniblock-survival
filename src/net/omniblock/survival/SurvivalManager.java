@@ -108,6 +108,7 @@ public class SurvivalManager {
 		survivalBox = new SurvivalBox();
 		MysteryBoxHandler.register(survivalBox);
 
+        Back.saveLocations();
 
 	}
 	

@@ -2,6 +2,7 @@ package net.omniblock.survival.systems.commands;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -113,5 +114,19 @@ public class Back implements CommandExecutor, Listener {
      */
     public static void addPlayerLocation(Player player){
         backLocations.put(player, player.getLocation());
+    }
+
+    /**
+     *
+     * Metodo para guardar las locaciones
+     * de todos los jugadores en caso
+     * de que se haga reload del
+     * plugin y se eliminen las locaciones
+     * previamente guardadas
+     *
+     */
+    public static void saveLocations(){
+        for(Player player : Bukkit.getServer().getOnlinePlayers())
+            addPlayerLocation(player);
     }
 }
