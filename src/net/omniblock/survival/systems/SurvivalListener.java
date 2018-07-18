@@ -37,7 +37,7 @@ public class SurvivalListener {
 					@Override
 					public void run() {
 
-						e.getPlayer().teleport(SurvivalManager.getLocation());
+						//e.getPlayer().teleport(SurvivalManager.getLocation());
 						e.getPlayer().setGameMode(GameMode.SURVIVAL);
 
 						e.getPlayer().setAllowFlight(false);

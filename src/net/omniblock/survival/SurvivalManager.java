@@ -1,12 +1,23 @@
 package net.omniblock.survival;
 
+import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.packets.network.Packets;
+import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
+import net.omniblock.packets.network.structure.type.PacketSenderType;
+import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.shop.systems.MysteryBoxHandler;
+import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.systems.SurvivalBox;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 
 import net.omniblock.network.library.utils.LocationUtils;
 import net.omniblock.survival.config.ConfigType;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * 
@@ -71,6 +82,19 @@ public class SurvivalManager {
 		}
 
 
+		SurvivalExecutor executor = new SurvivalExecutor();
+		String[] commands = new String[]{
+				"dinero",
+				"money",
+				"spawn",
+				"lobby",
+				"hub"
+		};
+
+		for (String command : commands)
+			SurvivalPlugin.getInstance().getCommand(command).setExecutor(new SurvivalExecutor());
+
+
 		survivalBox = new SurvivalBox();
 		MysteryBoxHandler.register(survivalBox);
 
@@ -100,4 +124,50 @@ public class SurvivalManager {
 	public static Location getLocation() {
 		return location;
 	}
+
+	public static class SurvivalExecutor implements CommandExecutor {
+
+		@Override
+		public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+
+			if(sender instanceof Player){
+
+				Player player = ((Player) sender).getPlayer();
+
+				if(cmd.getName().equalsIgnoreCase("money") ||
+						cmd.getName().equalsIgnoreCase("dinero")){
+
+					player.sendMessage(TextUtil.format("&7Dinero: &a" + SurvivalBankBase.getMoney(player) + "$"));
+					return true;
+
+				}
+
+				if(cmd.getName().equalsIgnoreCase("hub") ||
+						cmd.getName().equalsIgnoreCase("lobby")){
+
+					Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
+							.setPlayername(player.getName())
+							.setServertype(ServerType.MAIN_LOBBY_SERVER)
+							.setParty(false)
+							.build().setReceiver(PacketSenderType.OMNICORE));
+
+					return true;
+
+				}
+
+
+				if(cmd.getName().equalsIgnoreCase("spawn")){
+
+					player.teleport(SurvivalManager.getLocation());
+					return true;
+
+				}
+
+			}
+
+			return false;
+
+		}
+	}
+
 }
