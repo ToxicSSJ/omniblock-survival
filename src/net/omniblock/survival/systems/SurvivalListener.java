@@ -59,8 +59,6 @@ public class SurvivalListener {
 
 						});
 
-						Back.addPlayerLocation(e.getPlayer());
-
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);
 

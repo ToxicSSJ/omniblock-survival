@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -73,8 +74,9 @@ public class Back implements CommandExecutor, Listener {
                     if(seconds==1)player.sendMessage(TextUtil.format("&bTeletransportando..."));
 
                     if(seconds <= 0){
-                        addPlayerLocation(player);
                         player.teleport(backLocations.get(player));
+                        backLocations.put(player, inicialPos);
+
                         cancel();
                         return;
                     }
@@ -89,9 +91,8 @@ public class Back implements CommandExecutor, Listener {
     }
 
     @EventHandler
-    public void onLeave(PlayerQuitEvent e){
-        if(backLocations.containsKey(e.getPlayer()))
-            backLocations.remove(e.getPlayer());
+    public void onJoin(PlayerJoinEvent e){
+        if(!backLocations.containsKey(e.getPlayer())) addPlayerLocation(e.getPlayer());
     }
 
     @EventHandler
@@ -113,7 +114,7 @@ public class Back implements CommandExecutor, Listener {
      * @param player
      */
     public static void addPlayerLocation(Player player){
-        backLocations.put(player, player.getLocation());
+        backLocations.put(player, player.getLocation().clone());
     }
 
     /**
