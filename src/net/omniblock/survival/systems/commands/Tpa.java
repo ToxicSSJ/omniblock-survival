@@ -39,7 +39,7 @@ public class Tpa implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("tpa")){
             if(args.length == 0){
                 player.sendMessage(TextUtil.format(
-                        "&eUtiliza /tpa [&ajugador&e] para enviar una petición de teletransportación a este &ajugador&e."));
+                        "&eUtiliza /tpa <&ajugador&e> para enviar una petición de teletransportación a este &ajugador&e."));
                 return true;
             }
             else {
@@ -85,8 +85,11 @@ public class Tpa implements CommandExecutor {
 
             player.sendMessage(TextUtil.format("&aSolicitud aceptada. " + requestedPlayer.getName() +
                     " será teletransportado en &e3&a segundos."));
-            requestedPlayer.sendMessage(TextUtil.format("&e"+player.getName()+"&a ha aceptado tu petición." +
-                    " Serás teletransportado en &e3&a segundos. ¡No te muevas!"));
+
+            requestedPlayer.sendMessage(new String[]{
+                    TextUtil.format("&e"+player.getName()+"&a ha aceptado tu petición."),
+                    TextUtil.format("&aSerás teletransportado en &e3&a segundos. ¡No te muevas!")
+            });
 
             new BukkitRunnable() {
                 int seconds = 3;

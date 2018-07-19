@@ -73,8 +73,8 @@ public class Back implements CommandExecutor, Listener {
                     if(seconds==1)player.sendMessage(TextUtil.format("&bTeletransportando..."));
 
                     if(seconds <= 0){
+                        addPlayerLocation(player);
                         player.teleport(backLocations.get(player));
-                        backLocations.put(player, player.getLocation());
                         cancel();
                         return;
                     }
