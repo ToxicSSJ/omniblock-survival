@@ -29,32 +29,47 @@ public class SurvivalExecutor implements CommandExecutor {
 
 			}
 
-			if(cmd.getName().equalsIgnoreCase("pay"))
-				if(args.length >= 2){
+			if(cmd.getName().equalsIgnoreCase("pay")){
+				if(args.length >= 2) {
 
-					int senderMoney = SurvivalBankBase.getMoney(player);
+					try{
 
-					String playerCache = args[0];
-					int moneyCache = Integer.parseInt(args[1]);
+						int senderMoney = SurvivalBankBase.getMoney(player);
+
+						String playerCache = args[0];
+						int moneyCache = Integer.parseInt(args[1]);
 
 
-					if(senderMoney < moneyCache){
-						player.sendMessage(TextUtil.format("&7Te hacen falta &c$" + (senderMoney - moneyCache) + " &7para poder pagar."));
+						if (senderMoney < moneyCache) {
+							player.sendMessage(TextUtil.format("&7Te hacen falta &c$" + (senderMoney - moneyCache) + " &7para poder pagar."));
+							return true;
+
+						}
+
+						Player cache = SurvivalPlugin.getInstance().getServer().getPlayer(playerCache);
+
+						if (cache != null)
+							if (cache.isOnline()) {
+
+								SurvivalBankBase.removeMoney(player, moneyCache);
+								SurvivalBankBase.addMoney(playerCache, moneyCache);
+
+								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a " + playerCache));
+								return true;
+							}
+
+
+					}catch (Exception e){
+
+						player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
 						return true;
 
 					}
 
-					Player cache = SurvivalPlugin.getInstance().getServer().getPlayer(playerCache);
+					}
 
-					if(cache != null)
-						if(cache.isOnline()){
-
-							SurvivalBankBase.removeMoney(player, moneyCache);
-							SurvivalBankBase.addMoney(playerCache, moneyCache);
-
-							player.sendMessage(TextUtil.format("&7Le diste &a$" + moneyCache + " &7a " + playerCache));
-							return true;
-						}
+					player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
+					return true;
 				}
 
 			if(cmd.getName().equalsIgnoreCase("fly"))
