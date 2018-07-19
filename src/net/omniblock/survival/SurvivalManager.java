@@ -89,7 +89,9 @@ public class SurvivalManager {
 				"money",
 				"spawn",
 				"lobby",
-				"hub"
+				"hub",
+				"fly",
+				"pay"
 		};
         String[] tpaCommands = new String[]{
                 "tpa",
@@ -134,51 +136,6 @@ public class SurvivalManager {
 	 */
 	public static Location getLocation() {
 		return location;
-	}
-
-	public static class SurvivalExecutor implements CommandExecutor {
-
-		@Override
-		public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
-			if(sender instanceof Player){
-
-				Player player = ((Player) sender).getPlayer();
-
-				if(cmd.getName().equalsIgnoreCase("money") ||
-						cmd.getName().equalsIgnoreCase("dinero")){
-
-					player.sendMessage(TextUtil.format("&7Dinero: &a" + SurvivalBankBase.getMoney(player) + "$"));
-					return true;
-
-				}
-
-				if(cmd.getName().equalsIgnoreCase("hub") ||
-						cmd.getName().equalsIgnoreCase("lobby")){
-
-					Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
-							.setPlayername(player.getName())
-							.setServertype(ServerType.MAIN_LOBBY_SERVER)
-							.setParty(false)
-							.build().setReceiver(PacketSenderType.OMNICORE));
-
-					return true;
-
-				}
-
-
-				if(cmd.getName().equalsIgnoreCase("spawn")){
-
-					player.teleport(SurvivalManager.getLocation());
-					return true;
-
-				}
-
-			}
-
-			return false;
-
-		}
 	}
 
 }
