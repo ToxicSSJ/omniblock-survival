@@ -48,7 +48,7 @@ public class Back implements CommandExecutor, Listener {
                 return true;
             }
 
-            player.sendMessage(TextUtil.format("&bSerás teletransportado en 3 segundos. ¡No te muevas!"));
+            player.sendMessage(TextUtil.format("&eSerás teletransportado en 3 segundos. ¡No te muevas!"));
 
             new BukkitRunnable() {
                 int seconds = 3;
@@ -62,16 +62,17 @@ public class Back implements CommandExecutor, Listener {
                         return;
                     }
 
-                    if(inicialPos.getX() != player.getLocation().getX() ||
+                    if(seconds < 3 &&
+                            (inicialPos.getX() != player.getLocation().getX() ||
                             inicialPos.getY() != player.getLocation().getY() ||
-                            inicialPos.getZ() != player.getLocation().getZ()){
+                            inicialPos.getZ() != player.getLocation().getZ())){
 
                         player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
                         cancel();
                         return;
                     }
 
-                    if(seconds==1)player.sendMessage(TextUtil.format("&bTeletransportando..."));
+                    if(seconds==1)player.sendMessage(TextUtil.format("&eTeletransportando..."));
 
                     if(seconds <= 0){
                         player.teleport(backLocations.get(player));

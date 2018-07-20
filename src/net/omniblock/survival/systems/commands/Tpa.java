@@ -39,7 +39,7 @@ public class Tpa implements CommandExecutor {
         if(cmd.getName().equalsIgnoreCase("tpa")){
             if(args.length == 0){
                 player.sendMessage(TextUtil.format(
-                        "&eUtiliza /tpa <&ajugador&e> para enviar una petición de teletransportación a este &ajugador&e."));
+                        "&6Utiliza &e/tpa <jugador>&6 para enviar una petición de teletransportación a este &ejugador&6."));
                 return true;
             }
             else {
@@ -55,7 +55,7 @@ public class Tpa implements CommandExecutor {
 
                         tpRequest(toPlayer, player);
                         player.sendMessage(TextUtil.format(
-                                "&bSe ha enviado una petición de teletransporte a &a"+toPlayer.getName()));
+                                "&aSe ha enviado una petición de teletransporte a &a"+toPlayer.getName()));
                         return true;
                     }
                 }
@@ -112,9 +112,10 @@ public class Tpa implements CommandExecutor {
                         return;
                     }
 
-                    if(inicialPos.getX() != requestedPlayer.getLocation().getX() ||
+                    if(seconds < 3 &&
+                            (inicialPos.getX() != requestedPlayer.getLocation().getX() ||
                             inicialPos.getY() != requestedPlayer.getLocation().getY() ||
-                            inicialPos.getZ() != requestedPlayer.getLocation().getZ()){
+                            inicialPos.getZ() != requestedPlayer.getLocation().getZ())){
 
                         requestedPlayer.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
                         player.sendMessage(TextUtil.format("&c"+requestedPlayer.getName() +
@@ -124,7 +125,7 @@ public class Tpa implements CommandExecutor {
                     }
 
                     if(seconds==1)
-                        requestedPlayer.sendMessage(TextUtil.format("&bTeletransportando..."));
+                        requestedPlayer.sendMessage(TextUtil.format("&eTeletransportando..."));
 
                     if(seconds <= 0){
                         Back.addPlayerLocation(requestedPlayer);
@@ -146,7 +147,7 @@ public class Tpa implements CommandExecutor {
             }
 
             if(!args[0].equals(requestedPlayers.get(player).getName())){
-                player.sendMessage(TextUtil.format("&cLa petición de este usuario ya está denegada."));
+                player.sendMessage(TextUtil.format("&cLa petición de este usuario ya está denegadao expirada."));
                 return true;
             }
 
@@ -180,7 +181,7 @@ public class Tpa implements CommandExecutor {
         deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(TextUtil.format("&c&l✖  &7Denegar la petición de &6&l" + player.getName())).create()));
 
         accept.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/tpaccept " + player.getName() ));
-        deny.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/tpeny " + player.getName() ));
+        deny.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/tpdeny " + player.getName() ));
 
         message.addExtra(accept);
         message.addExtra(TextUtil.format("     &8&l|&r     "));
@@ -236,6 +237,8 @@ public class Tpa implements CommandExecutor {
                         || seconds <= 0){
 
                     requestedPlayers.remove(toPlayer);
+                    player.sendMessage(TextUtil.format("&cTu petición a &e"+toPlayer.getName()+"&c ha expirado."));
+                    toPlayer.sendMessage(TextUtil.format("&eLa petición de &a"+player.getName()+"&e ha expirado."));
                     cancel();
                     return;
                 }

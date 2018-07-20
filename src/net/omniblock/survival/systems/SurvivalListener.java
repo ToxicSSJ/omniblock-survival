@@ -4,6 +4,7 @@ import net.omniblock.survival.SurvivalManager;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -58,6 +59,28 @@ public class SurvivalListener {
 								TextUtil.getCenteredMessage("&8---------------------------------------------------")
 
 						});
+
+						/*
+        				Sistema para evitar que un jugador muera por estár en el aire al conectarse
+
+        				Está pensado igualmente para jugadores que de pura casualidad están en el vacio.
+        				De igual manera está limitado a 200 repeticiones (100 bloques de altura)
+        				para no causar problemas al servidor
+        				*/
+
+						Location loc = e.getPlayer().getLocation().add(0, -1, 0).clone();
+
+						while (loc.getBlock().isEmpty() && loc.getBlockY() >= 0 && loc.getBlockY() <= 2000){
+							loc.add(0, -1, 0);
+						}
+
+						if(0 > loc.getBlockY() || loc.getBlockY() > 2000)	//Si el jugador está fuera de los limites
+							e.getPlayer().teleport(loc.getWorld().getHighestBlockAt(loc).getLocation());
+						else
+						{
+							loc.add(0, 1, 0);
+							e.getPlayer().teleport(loc);
+						}
 
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);
