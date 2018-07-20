@@ -99,7 +99,6 @@ public class SurvivalGUIExecutor implements GuiExecutor {
 					return;
 			}),
 			new ItemGUI(new ItemBuilder(Material.ENDER_PEARL)
-					.durability((short) 3)
 					.name(TextUtil.format("&2Back"))
 					.lore("")
 					.lore(TextUtil.format("&8&m-&r &7Utiliza este comando"))
