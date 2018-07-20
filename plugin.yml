@@ -25,3 +25,7 @@ commands:
       description: Comando para dar dinero.
    fly:
       description: Comando para volar.
+   help:
+      description: Comando para ver los tutoriales.
+   ayuda:
+      description: Comando para ver los tutoriales.

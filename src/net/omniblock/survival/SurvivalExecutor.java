@@ -6,6 +6,8 @@ import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;
 import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
+import net.omniblock.survival.systems.commands.gui.InventoryGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,6 +31,15 @@ public class SurvivalExecutor implements CommandExecutor {
 
 			}
 
+			if(cmd.getName().equalsIgnoreCase("help") ||
+					cmd.getName().equalsIgnoreCase("ayuda")){
+
+				InventoryGUI gui = InventoryGUI.InventoryHelp();
+				gui.openShop(player);
+
+				return true;
+			}
+
 			if(cmd.getName().equalsIgnoreCase("pay")){
 				if(args.length >= 2) {
 
@@ -39,24 +50,38 @@ public class SurvivalExecutor implements CommandExecutor {
 						String playerCache = args[0];
 						int moneyCache = Integer.parseInt(args[1]);
 
-
 						if (senderMoney < moneyCache) {
 							player.sendMessage(TextUtil.format("&7Te hacen falta &c$" + (senderMoney - moneyCache) + " &7para poder pagar."));
 							return true;
 
 						}
 
-						Player cache = SurvivalPlugin.getInstance().getServer().getPlayer(playerCache);
+						for(Player toPlayer : Bukkit.getServer().getOnlinePlayers()){
+							if(toPlayer.getName().toLowerCase().contains(playerCache.toLowerCase())){
 
-						if (cache != null)
-							if (cache.isOnline()) {
+								if(toPlayer.getName().equals(player.getName())){
+									player.sendMessage(TextUtil.format("&cNo puedes darte dinero a ti mismo."));
+									return true;
+								}
+
 
 								SurvivalBankBase.removeMoney(player, moneyCache);
-								SurvivalBankBase.addMoney(playerCache, moneyCache);
+
+								System.out.println("DINERO BASE: " + SurvivalBankBase.getMoney(playerCache) + toPlayer);
+
+								SurvivalBankBase.addMoney(toPlayer, moneyCache);
+
+								System.out.println("DINERO nuevo: " + SurvivalBankBase.getMoney(playerCache) + toPlayer);
 
 								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a " + playerCache));
 								return true;
+
 							}
+
+
+							player.sendMessage(TextUtil.format("&7El jugador no es valido."));
+							return true;
+						}
 
 
 					}catch (Exception e){

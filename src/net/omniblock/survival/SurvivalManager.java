@@ -1,24 +1,14 @@
 package net.omniblock.survival;
 
-import net.omniblock.network.library.utils.TextUtil;
-import net.omniblock.packets.network.Packets;
-import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
-import net.omniblock.packets.network.structure.type.PacketSenderType;
-import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.shop.systems.MysteryBoxHandler;
-import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.systems.SurvivalBox;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.Tpa;
+import net.omniblock.survival.systems.commands.gui.RegisterGUI;
 import org.bukkit.Location;
 import org.bukkit.World;
-
 import net.omniblock.network.library.utils.LocationUtils;
 import net.omniblock.survival.config.ConfigType;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 /**
  * 
@@ -83,6 +73,8 @@ public class SurvivalManager {
 		}
 
 
+		RegisterGUI.registerGUI(new SurvivalGUIExecutor());
+
 		SurvivalExecutor executor = new SurvivalExecutor();
         String[] commands = new String[]{
 				"dinero",
@@ -91,7 +83,9 @@ public class SurvivalManager {
 				"lobby",
 				"hub",
 				"fly",
-				"pay"
+				"pay",
+				"ayuda",
+				"help"
 		};
         String[] tpaCommands = new String[]{
                 "tpa",
