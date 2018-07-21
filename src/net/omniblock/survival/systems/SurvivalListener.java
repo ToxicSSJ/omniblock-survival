@@ -1,5 +1,7 @@
 package net.omniblock.survival.systems;
 
+import net.omniblock.network.library.addons.resourceaddon.ResourceHandler;
+import net.omniblock.network.library.addons.resourceaddon.type.ResourceType;
 import net.omniblock.survival.SurvivalManager;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
@@ -81,6 +83,11 @@ public class SurvivalListener {
 							loc.add(0, 1, 0);
 							e.getPlayer().teleport(loc);
 						}
+
+						/*
+						Actualizar el resource pack del jugador si tiene el de sky wars Z
+						 */
+                        ResourceHandler.sendResourcePack(e.getPlayer(), ResourceType.OMNIBLOCK_DEFAULT);
 
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);
