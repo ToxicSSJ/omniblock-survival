@@ -82,25 +82,6 @@ public class SurvivalExecutor implements CommandExecutor {
 				return true;
 			}
 
-			if(cmd.getName().equalsIgnoreCase("fly"))
-				if(player.hasPermission("omniblock.network.moderator")){
-					if(player.isFlying()){
-
-						player.setAllowFlight(false);
-						player.setFlying(false);
-						player.sendMessage(TextUtil.format("&7Desactivaste el fly"));
-
-					}else{
-
-						player.setAllowFlight(true);
-						player.setFlying(true);
-						player.sendMessage(TextUtil.format("&7Activaste el fly"));
-					}
-
-
-				return true;
-			}
-
 			if(cmd.getName().equalsIgnoreCase("hub") ||
 					cmd.getName().equalsIgnoreCase("lobby")){
 
