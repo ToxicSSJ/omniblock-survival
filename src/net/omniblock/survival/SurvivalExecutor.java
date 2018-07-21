@@ -63,39 +63,24 @@ public class SurvivalExecutor implements CommandExecutor {
 									player.sendMessage(TextUtil.format("&cNo puedes darte dinero a ti mismo."));
 									return true;
 								}
-
-
+								
 								SurvivalBankBase.removeMoney(player, moneyCache);
-
-								System.out.println("DINERO BASE: " + SurvivalBankBase.getMoney(playerCache) + toPlayer);
-
 								SurvivalBankBase.addMoney(toPlayer, moneyCache);
-
-								System.out.println("DINERO nuevo: " + SurvivalBankBase.getMoney(playerCache) + toPlayer);
-
 								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a " + playerCache));
 								return true;
 
 							}
-
-
-							player.sendMessage(TextUtil.format("&7El jugador no es valido."));
-							return true;
 						}
 
-
-					}catch (Exception e){
-
-						player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
+						player.sendMessage(TextUtil.format("&7El jugador no es valido."));
 						return true;
 
-					}
-
-					}
-
-					player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
-					return true;
+					}catch (Exception e){}
 				}
+
+				player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
+				return true;
+			}
 
 			if(cmd.getName().equalsIgnoreCase("fly"))
 				if(player.hasPermission("omniblock.network.moderator")){
@@ -113,8 +98,8 @@ public class SurvivalExecutor implements CommandExecutor {
 					}
 
 
-					return true;
-				}
+				return true;
+			}
 
 			if(cmd.getName().equalsIgnoreCase("hub") ||
 					cmd.getName().equalsIgnoreCase("lobby")){

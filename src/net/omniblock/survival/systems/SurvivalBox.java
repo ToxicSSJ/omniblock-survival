@@ -41,7 +41,7 @@ public class SurvivalBox extends MysteryBox  {
 						if(e.getClickedBlock().getType().equals(Material.CHEST)){
 
 							destroyBox();
-							e.getPlayer().sendMessage(TextUtil.format("&8&lB&8oosters &c&l»  &c&lProximamente.... "));
+							e.getPlayer().sendMessage(TextUtil.format("&8&lB&8oosters &c&l  &c&lProximamente.... "));
 
 						}
 

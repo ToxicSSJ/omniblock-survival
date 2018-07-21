@@ -34,7 +34,7 @@ public class InventoryGUI {
 					paginator.addPage(cacheBuilder);
 					slotter.reset();
 
-					cacheBuilder = new InventoryBuilder(TextUtil.format("&a&lComandos"), 1 * 9, false);
+					cacheBuilder = new InventoryBuilder(TextUtil.format("&4&lComandos"), 1 * 9, false);
 				}
 
 				if(item.getExecutor() == null)
