@@ -70,7 +70,6 @@ public class SurvivalListener {
         				De igual manera está limitado a 200 repeticiones (100 bloques de altura)
         				para no causar problemas al servidor
         				*/
-
 						Location loc = e.getPlayer().getLocation().add(0, -1, 0).clone();
 
 						while (loc.getBlock().isEmpty() && loc.getBlockY() >= 0 && loc.getBlockY() <= 2000){
@@ -89,6 +88,12 @@ public class SurvivalListener {
 						Actualizar el resource pack del jugador si tiene el de sky wars Z
 						 */
                         ResourceHandler.sendResourcePack(e.getPlayer(), ResourceType.OMNIBLOCK_DEFAULT);
+
+                        /*
+                        Añadir al jugador a la boss bar
+                         */
+						if(!SurvivalManager.bar.getPlayers().contains(e.getPlayer()))
+							SurvivalManager.bar.addPlayer(e.getPlayer());
 
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);

@@ -6,6 +6,7 @@ import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;
 import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
+import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -100,6 +101,39 @@ public class SurvivalExecutor implements CommandExecutor {
 				player.teleport(SurvivalManager.getLocation());
 				return true;
 
+			}
+
+			if(cmd.getName().equalsIgnoreCase("stoggle") ||
+					cmd.getName().equalsIgnoreCase("st")){
+
+				if(args.length > 0){
+
+					if(args[0].equalsIgnoreCase("scoreboard") ||
+							args[0].equalsIgnoreCase("sb")){
+
+						if(SurvivalScoreBoard.blackList.contains(player))
+							SurvivalScoreBoard.blackList.remove(player);
+						else
+							SurvivalScoreBoard.blackList.add(player);
+
+						return true;
+					}
+
+					if(args[0].equalsIgnoreCase("bar") ||
+							args[0].equalsIgnoreCase("bossbar")){
+
+						if(SurvivalManager.bar.getPlayers().contains(player))
+							SurvivalManager.bar.removePlayer(player);
+						else
+							SurvivalManager.bar.addPlayer(player);
+
+						return true;
+					}
+				}
+
+
+				player.sendMessage(TextUtil.format("&7/stoogle &e<scoreboard | bar>"));
+				return true;
 			}
 		}
 

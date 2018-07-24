@@ -1,14 +1,21 @@
 package net.omniblock.survival;
 
+import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.shop.systems.MysteryBoxHandler;
+import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.SurvivalBox;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.Tpa;
 import net.omniblock.survival.systems.commands.gui.RegisterGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import net.omniblock.network.library.utils.LocationUtils;
 import net.omniblock.survival.config.ConfigType;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 
 /**
  * 
@@ -47,6 +54,15 @@ public class SurvivalManager {
 	 *
 	 */
 	protected static SurvivalBox survivalBox;
+
+	/**
+	 *
+	 *
+	 * Bossbar para survival
+	 *
+	 *
+	 */
+	public static BossBar bar;
 	
 	/**
 	 * 
@@ -85,7 +101,9 @@ public class SurvivalManager {
 				"fly",
 				"pay",
 				"ayuda",
-				"help"
+				"help",
+				"stoggle",
+				"st"
 		};
         String[] tpaCommands = new String[]{
                 "tpa",
@@ -106,6 +124,10 @@ public class SurvivalManager {
 
         Back.saveLocations();
 
+		SurvivalScoreBoard.initialize();
+
+		bar = Bukkit.createBossBar(TextUtil.format("&b&lOmniblock Network &8« &aSurvival &8»"),
+				BarColor.BLUE, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 	}
 	
 	/**

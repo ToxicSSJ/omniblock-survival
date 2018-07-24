@@ -29,3 +29,7 @@ commands:
       description: Comando para ver los tutoriales.
    ayuda:
       description: Comando para ver los tutoriales.
+   stoggle:
+      description: Comando para cambiar ajustes
+   st:
+      description: Comando para cambiar ajustes
