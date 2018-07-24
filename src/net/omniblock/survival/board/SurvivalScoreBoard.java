@@ -2,12 +2,14 @@ package net.omniblock.survival.board;
 
 import net.omniblock.jobs.api.listener.jobs.structure.Job;
 import net.omniblock.jobs.api.type.JobType;
+import net.omniblock.jobs.base.object.PlayerJobWrapper;
 import net.omniblock.network.handlers.base.bases.type.BankBase;
 import net.omniblock.network.handlers.base.bases.type.RankBase;
 import net.omniblock.network.library.helpers.scoreboard.ScoreboardUtil;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.network.systems.rank.type.RankType;
 import net.omniblock.survival.SurvivalPlugin;
+import net.omniblock.survival.base.SurvivalBankBase;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -68,24 +70,30 @@ public class SurvivalScoreBoard {
 	}
 
 	private static void updateScoreboard(Player player, String title){
+
 		RankType rank = RankBase.getRank(player);
-		String job = "&7Sin empleo.";
+		PlayerJobWrapper playerJob = null;
 
 		for(JobType jobType : JobType.values())
-			if(Job.isActivated(player, jobType))
-				job = jobType.getName();
+			if(Job.isActivated(player, jobType)) {
+
+				playerJob = Job.getJobs(player).getJob(jobType);
+			}
 
 		ScoreboardUtil.unrankedSidebarDisplay(player, new String[]{
 				title,
 				TextUtil.format(" "),
 				TextUtil.format("&7Jugador: &b"+player.getName()),
 				TextUtil.format("&7Rango: &b" + (rank == RankType.USER ? "&b(&7Usuario&b)" : rank.getPrefix())),
-				TextUtil.format("&7Trabajo: &b" + job),
-				TextUtil.format("&7Dinero: &b"+BankBase.getMoney(player) + " ⛃"),
+				TextUtil.format("&7Dinero: &b"+ SurvivalBankBase.getMoney(player) + " ⛃"),
 				TextUtil.format("  "),
+				TextUtil.format("&7Trabajo: &b" + (playerJob != null ? playerJob.getJobType().getName() : "&bSin empleo")),
+				TextUtil.format((playerJob != null ? ("&7Nivel: &b" + playerJob.getPrestige()) : "   ")),
+				TextUtil.format((playerJob != null ? ("&7Exp: &b" + playerJob.getXP()) : "   ")),
+				TextUtil.format("   "),
 				TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
 				TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
-				TextUtil.format("   "),
+				TextUtil.format("    "),
 				TextUtil.format("&emc.omniblock.net")
 
 		}, false);
