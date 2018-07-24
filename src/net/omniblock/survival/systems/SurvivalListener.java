@@ -5,6 +5,7 @@ import net.omniblock.network.library.addons.resourceaddon.type.ResourceType;
 import net.omniblock.survival.SurvivalManager;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
+import net.omniblock.survival.systems.events.God;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -97,6 +98,7 @@ public class SurvivalListener {
 		}, SurvivalPlugin.getInstance());
 
 		SurvivalPlugin.getInstance().getServer().getPluginManager().registerEvents(new Back(), SurvivalPlugin.getInstance());
+		SurvivalPlugin.getInstance().getServer().getPluginManager().registerEvents(new God(), SurvivalPlugin.getInstance());
 		
 	}
 	

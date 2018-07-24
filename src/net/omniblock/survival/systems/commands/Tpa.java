@@ -6,6 +6,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
+import net.omniblock.survival.systems.events.God;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -14,6 +15,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.xml.soap.Text;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +37,9 @@ public class Tpa implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
 
-        //TPA Command
+        /*
+        TPA Command
+         */
         if(cmd.getName().equalsIgnoreCase("tpa")){
             if(args.length == 0){
                 player.sendMessage(TextUtil.format(
@@ -67,7 +71,9 @@ public class Tpa implements CommandExecutor {
             }
         }
 
-        //TPACEPT Command
+        /*
+        TPACEPT Command
+         */
         if(cmd.getName().equalsIgnoreCase("tpaccept")) {
             if (!requestedPlayers.containsKey(player)) {
                 player.sendMessage(TextUtil.format("&eActualmente no tienes ninguna solicitud de teletransporte."));
@@ -81,6 +87,9 @@ public class Tpa implements CommandExecutor {
                 return true;
             }
 
+            /*
+             Inicia el teletransporte
+              */
             requestedPlayers.remove(player);
 
             player.sendMessage(TextUtil.format("&aSolicitud aceptada. " + requestedPlayer.getName() +
@@ -92,44 +101,62 @@ public class Tpa implements CommandExecutor {
             });
 
             new BukkitRunnable() {
-                int seconds = 3;
-                Location inicialPos = requestedPlayer.getLocation().clone();
+                int god = 6;
+                int seconds = 3 + god; // + 15 segundos de invulnerabilidad
+                Location firstLoc = requestedPlayer.getLocation().clone();
 
                 @Override
                 public void run() {
 
-                    if(!requestedPlayer.isOnline()){
-                        player.sendMessage(TextUtil.format("&e"+requestedPlayer.getName() +
-                                "&c se ha desconectado, teletransportación cancelada."));
-                        cancel();
-                        return;
+                    if(god <= seconds && seconds <= 3 + god){
+
+                        if(!requestedPlayer.isOnline()){
+                            player.sendMessage(TextUtil.format("&e"+requestedPlayer.getName() +
+                                    "&c se ha desconectado, teletransportación cancelada."));
+                            cancel();
+                            return;
+                        }
+
+                        if(!player.isOnline()){
+                            player.sendMessage(TextUtil.format("&e"+requestedPlayer.getName() +
+                                    "&c se ha desconectado, la teletransportación ha sido cancelada."));
+                            cancel();
+                            return;
+                        }
+
+                        if(seconds <= 2 + god &&
+                                (firstLoc.getX() != requestedPlayer.getLocation().getX() ||
+                                        firstLoc.getY() != requestedPlayer.getLocation().getY() ||
+                                        firstLoc.getZ() != requestedPlayer.getLocation().getZ())){
+
+                            requestedPlayer.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
+                            player.sendMessage(TextUtil.format("&c"+requestedPlayer.getName() +
+                                    "&e se ha movido durante el teletransporte y se ha cancelado."));
+                            cancel();
+                            return;
+                        }
+
+                        if(seconds==1 + god)
+                            requestedPlayer.sendMessage(TextUtil.format("&eTeletransportando..."));
+
+                        if(seconds <= god){
+                            Back.addPlayerLocation(requestedPlayer);
+                            requestedPlayer.teleport(player);
+
+                            if(!God.GODS.contains(requestedPlayer)){
+                                requestedPlayer.sendMessage(TextUtil.format("&eTienes &a"+god+" &esegundos de inmunidad."));
+                                God.GODS.add(requestedPlayer);
+                            }else{
+                                cancel();
+                                return;
+                            }
+                        }
                     }
 
-                    if(!player.isOnline()){
-                        player.sendMessage(TextUtil.format("&e"+requestedPlayer.getName() +
-                                "&c se ha desconectado, la teletransportación ha sido cancelada."));
-                        cancel();
-                        return;
-                    }
+                    if(seconds <= 0 && God.GODS.contains(requestedPlayer)){
+                        God.GODS.remove(requestedPlayer);
+                        requestedPlayer.sendMessage(TextUtil.format("&eTu inmunidad ha acabado. ¡Ten cuidado!"));
 
-                    if(seconds < 3 &&
-                            (inicialPos.getX() != requestedPlayer.getLocation().getX() ||
-                            inicialPos.getY() != requestedPlayer.getLocation().getY() ||
-                            inicialPos.getZ() != requestedPlayer.getLocation().getZ())){
-
-                        requestedPlayer.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
-                        player.sendMessage(TextUtil.format("&c"+requestedPlayer.getName() +
-                                "&e se ha movido durante el teletransporte y se ha cancelado."));
-                        cancel();
-                        return;
-                    }
-
-                    if(seconds==1)
-                        requestedPlayer.sendMessage(TextUtil.format("&eTeletransportando..."));
-
-                    if(seconds <= 0){
-                        Back.addPlayerLocation(requestedPlayer);
-                        requestedPlayer.teleport(player);
                         cancel();
                     }
 
@@ -139,7 +166,9 @@ public class Tpa implements CommandExecutor {
             return true;
         }
 
-        //TPDENY Command
+        /*
+        TPDENY Command
+         */
         if(cmd.getName().equalsIgnoreCase("tpdeny")){
             if (!requestedPlayers.containsKey(player)) {
                 player.sendMessage(TextUtil.format("&eActualmente no tienes ninguna solicitud de teletransporte."));
@@ -160,15 +189,14 @@ public class Tpa implements CommandExecutor {
         return false;
     }
 
-    /**
-     *
-     * Metodo para gestionar las peticiones
-     * de la función /tpa
-     *
-     * @param player
-     * @param toPlayer
-     */
-    private void tpRequest(Player toPlayer, Player player) {
+	/**
+	 * Metodo para gestionar las peticiones
+	 *      * de la función /tpa
+	 *
+	 * @param toPlayer Jugador al que se le pide el teletransporte
+	 * @param player Jugador que pide teletransporte
+	 */
+	private void tpRequest(Player toPlayer, Player player) {
 
         requestedPlayers.put(toPlayer, player);
 
