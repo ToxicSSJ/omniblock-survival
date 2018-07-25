@@ -67,7 +67,8 @@ public class SurvivalExecutor implements CommandExecutor {
 								
 								SurvivalBankBase.removeMoney(player, moneyCache);
 								SurvivalBankBase.addMoney(toPlayer, moneyCache);
-								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a " + playerCache));
+								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a &a" + toPlayer.getName()));
+								toPlayer.sendMessage(TextUtil.format("&7Has recibido &a" + moneyCache + "⛃ &7de &a" + player.getName()));
 								return true;
 
 							}
