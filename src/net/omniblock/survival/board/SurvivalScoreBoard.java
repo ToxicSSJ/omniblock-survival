@@ -80,23 +80,40 @@ public class SurvivalScoreBoard {
 				playerJob = Job.getJobs(player).getJob(jobType);
 			}
 
-		ScoreboardUtil.unrankedSidebarDisplay(player, new String[]{
+		if(playerJob != null)
+			ScoreboardUtil.unrankedSidebarDisplay(player, new String[]{
 				title,
 				TextUtil.format(" "),
 				TextUtil.format("&7Jugador: &b"+player.getName()),
 				TextUtil.format("&7Rango: &b" + (rank == RankType.USER ? "&b(&7Usuario&b)" : rank.getPrefix())),
 				TextUtil.format("&7Dinero: &b"+ SurvivalBankBase.getMoney(player) + " ⛃"),
 				TextUtil.format("  "),
-				TextUtil.format("&7Trabajo: &b" + (playerJob != null ? playerJob.getJobType().getName() : "&bSin empleo")),
-				TextUtil.format((playerJob != null ? ("&7Nivel: &b" + playerJob.getPrestige()) : "   ")),
-				TextUtil.format((playerJob != null ? ("&7Exp: &b" + playerJob.getXP()) : "   ")),
+				TextUtil.format("&7Trabajo: &b" + playerJob.getJobType().getName()),
+				TextUtil.format("&7Nivel: &b" + playerJob.getPrestige()),
+				TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&7/&b" + playerJob.getPrestige() * 4000),
 				TextUtil.format("   "),
 				TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
 				TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
 				TextUtil.format("    "),
 				TextUtil.format("&emc.omniblock.net")
 
-		}, false);
+			}, false);
+		else
+			ScoreboardUtil.unrankedSidebarDisplay(player, new String[]{
+					title,
+					TextUtil.format(" "),
+					TextUtil.format("&7Jugador: &b"+player.getName()),
+					TextUtil.format("&7Rango: &b" + (rank == RankType.USER ? "&b(&7Usuario&b)" : rank.getPrefix())),
+					TextUtil.format("&7Dinero: &b"+ SurvivalBankBase.getMoney(player) + " ⛃"),
+					TextUtil.format("  "),
+					TextUtil.format("&7Trabajo: &bSin empleo"),
+					TextUtil.format("   "),
+					TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
+					TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
+					TextUtil.format("    "),
+					TextUtil.format("&emc.omniblock.net")
+
+			}, false);
 	}
 
 	public static String sbTitleNormal(int a) {

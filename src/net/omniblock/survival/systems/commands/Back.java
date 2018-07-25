@@ -113,6 +113,7 @@ public class Back implements CommandExecutor, Listener {
      * para la función de back.
      *
      * @param player
+     *          Jugador del que se registra la locación
      */
     public static void addPlayerLocation(Player player){
         backLocations.put(player, player.getLocation().clone());
