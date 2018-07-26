@@ -112,10 +112,15 @@ public class SurvivalExecutor implements CommandExecutor {
 					if(args[0].equalsIgnoreCase("scoreboard") ||
 							args[0].equalsIgnoreCase("sb")){
 
-						if(SurvivalScoreBoard.blackList.contains(player))
+						if(SurvivalScoreBoard.blackList.contains(player)){
+
 							SurvivalScoreBoard.blackList.remove(player);
-						else
+							player.sendMessage(TextUtil.format("&aScoreboard activada."));
+						}
+						else {
 							SurvivalScoreBoard.blackList.add(player);
+							player.sendMessage(TextUtil.format("&aScoreboard desactivada."));
+						}
 
 						return true;
 					}
@@ -123,10 +128,15 @@ public class SurvivalExecutor implements CommandExecutor {
 					if(args[0].equalsIgnoreCase("bar") ||
 							args[0].equalsIgnoreCase("bossbar")){
 
-						if(SurvivalManager.bar.getPlayers().contains(player))
+						if(SurvivalManager.bar.getPlayers().contains(player)) {
+
 							SurvivalManager.bar.removePlayer(player);
-						else
+							player.sendMessage(TextUtil.format("&aBossbar desactivada."));
+						}
+						else {
 							SurvivalManager.bar.addPlayer(player);
+							player.sendMessage(TextUtil.format("&aBossbar activada."));
+						}
 
 						return true;
 					}

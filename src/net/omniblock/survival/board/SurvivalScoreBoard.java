@@ -90,7 +90,7 @@ public class SurvivalScoreBoard {
 				TextUtil.format("  "),
 				TextUtil.format("&7Trabajo: &b" + playerJob.getJobType().getName()),
 				TextUtil.format("&7Nivel: &b" + playerJob.getPrestige()),
-				TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&7/&b" + playerJob.getPrestige() * 4000),
+				TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&7/&b" + playerJob.getPrestige() * 4 + "k"),
 				TextUtil.format("   "),
 				TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
 				TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),

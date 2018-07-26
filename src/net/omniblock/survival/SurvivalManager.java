@@ -107,8 +107,11 @@ public class SurvivalManager {
 		};
         String[] tpaCommands = new String[]{
                 "tpa",
-                "tpaccept",
-                "tpdeny"
+                "tpAccept",
+                "tpDeny",
+				"tpaHere",
+				"tphAccept",
+				"tphDeny"
         };
 
         for (String command : commands)

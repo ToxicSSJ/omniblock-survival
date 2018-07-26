@@ -19,6 +19,12 @@ commands:
       description: Comando para aceptar petición de tpa.
    tpdeny:
       description: Comando para denegar petición de tpa.
+   tpahere:
+      description: Comando para pedir a otro jugador teletransportase hacia ti.
+   tphaccept:
+      description: Comando para aceptar petición de tpahere.
+   tphdeny:
+      description: Comando para denegar petición de tpahere.
    back:
       description: Comando para regresar a una posición previa.
    pay:
