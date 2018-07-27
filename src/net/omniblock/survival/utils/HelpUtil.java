@@ -73,8 +73,9 @@ public class HelpUtil {
 
 	private static TextComponent cmdFormatComponent(String format){
 		StringBuilder blankSpaces = new StringBuilder();
-		int spaces = TextUtil.getCenteredMessage(format).length() / 2;
-		for(int i = 1; i < spaces; i++)
+		String cache = "Formato: " + format;
+		int spaces = TextUtil.getCenteredMessage(cache).length() - cache.length();
+		for(int i = 0; i < spaces; i++)
 			blankSpaces.append(" ");
 
 		TextComponent message = new TextComponent(blankSpaces.toString());
