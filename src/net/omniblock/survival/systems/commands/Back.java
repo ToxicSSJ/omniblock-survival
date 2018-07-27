@@ -11,9 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -52,7 +51,7 @@ public class Back implements CommandExecutor, Listener {
 
             new BukkitRunnable() {
                 int seconds = 3;
-                Location inicialPos = player.getLocation().clone();
+                Location loc = player.getLocation().clone();
 
                 @Override
                 public void run() {
@@ -63,9 +62,9 @@ public class Back implements CommandExecutor, Listener {
                     }
 
                     if(seconds < 3 &&
-                            (inicialPos.getX() != player.getLocation().getX() ||
-                            inicialPos.getY() != player.getLocation().getY() ||
-                            inicialPos.getZ() != player.getLocation().getZ())){
+                            (loc.getX() != player.getLocation().getX() ||
+                            loc.getY() != player.getLocation().getY() ||
+                            loc.getZ() != player.getLocation().getZ())){
 
                         player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
                         cancel();
@@ -76,7 +75,7 @@ public class Back implements CommandExecutor, Listener {
 
                     if(seconds <= 0){
                         player.teleport(backLocations.get(player));
-                        backLocations.put(player, inicialPos);
+                        backLocations.put(player, loc);
 
                         cancel();
                         return;
@@ -97,8 +96,8 @@ public class Back implements CommandExecutor, Listener {
     }
 
     @EventHandler
-    public void changedWorld(PlayerChangedWorldEvent e){
-        addPlayerLocation(e.getPlayer());
+    public void onTeleport(PlayerTeleportEvent e){
+        addPlayerLocation(e.getPlayer(), e.getFrom());
     }
 
     @EventHandler
@@ -113,10 +112,25 @@ public class Back implements CommandExecutor, Listener {
      * para la función de back.
      *
      * @param player
-     *          Jugador del que se registra la locación
+     *          Jugador del que se registra la locación.
      */
     public static void addPlayerLocation(Player player){
         backLocations.put(player, player.getLocation().clone());
+    }
+
+    /**
+     *
+     * Metodo que sirve para guardar la
+     * locacipon de un jugador para
+     * la funcion de back.
+     *
+     * @param player
+     *          Jugador del que se registra la locación.
+     * @param loc
+     *          La locación del jugador.
+     */
+    public static void addPlayerLocation(Player player, Location loc){
+        backLocations.put(player, loc);
     }
 
     /**

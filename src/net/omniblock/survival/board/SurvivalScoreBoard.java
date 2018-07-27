@@ -3,6 +3,7 @@ package net.omniblock.survival.board;
 import net.omniblock.jobs.api.listener.jobs.structure.Job;
 import net.omniblock.jobs.api.type.JobType;
 import net.omniblock.jobs.base.object.PlayerJobWrapper;
+import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.handlers.base.bases.type.BankBase;
 import net.omniblock.network.handlers.base.bases.type.RankBase;
 import net.omniblock.network.library.helpers.scoreboard.ScoreboardUtil;
@@ -92,7 +93,7 @@ public class SurvivalScoreBoard {
 				TextUtil.format("&7Nivel: &b" + playerJob.getPrestige()),
 				TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&8 / &b" + playerJob.getPrestige() * 4 + "k"),
 				TextUtil.format("   "),
-				TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
+				TextUtil.format("&7Jugadores: &b" + (Bukkit.getOnlinePlayers().size() - SpigotVanishAPI.getVanishedPlayers().size())),
 				TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
 				TextUtil.format("    "),
 				TextUtil.format("&emc.omniblock.net")
@@ -108,7 +109,7 @@ public class SurvivalScoreBoard {
 					TextUtil.format("  "),
 					TextUtil.format("&7Trabajo: &bSin empleo"),
 					TextUtil.format("   "),
-					TextUtil.format("&7Jugadores: &b" + Bukkit.getOnlinePlayers().size()),
+					TextUtil.format("&7Jugadores: &b" + (Bukkit.getOnlinePlayers().size() - SpigotVanishAPI.getVanishedPlayers().size())),
 					TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
 					TextUtil.format("    "),
 					TextUtil.format("&emc.omniblock.net")

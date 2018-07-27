@@ -1,5 +1,6 @@
 package net.omniblock.survival;
 
+import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.packets.network.Packets;
 import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
@@ -7,12 +8,15 @@ import net.omniblock.packets.network.structure.type.PacketSenderType;
 import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.board.SurvivalScoreBoard;
+import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class SurvivalExecutor implements CommandExecutor {
 
@@ -64,6 +68,8 @@ public class SurvivalExecutor implements CommandExecutor {
 									player.sendMessage(TextUtil.format("&cNo puedes darte dinero a ti mismo."));
 									return true;
 								}
+
+								if(SpigotVanishAPI.getVanishedPlayers().contains(toPlayer)) continue;
 								
 								SurvivalBankBase.removeMoney(player, moneyCache);
 								SurvivalBankBase.addMoney(toPlayer, moneyCache);
@@ -99,7 +105,45 @@ public class SurvivalExecutor implements CommandExecutor {
 
 			if(cmd.getName().equalsIgnoreCase("spawn")){
 
-				player.teleport(SurvivalManager.getLocation());
+				player.sendMessage(TextUtil.format("&eSerás teletransportado en 3 segundos. ¡No te muevas!"));
+
+				new BukkitRunnable() {
+					int seconds = 3;
+					Location loc = player.getLocation().clone();
+
+					@Override
+					public void run() {
+
+						if(!player.isOnline()){
+							cancel();
+							return;
+						}
+
+						if(seconds < 3 &&
+								(loc.getX() != player.getLocation().getX() ||
+										loc.getY() != player.getLocation().getY() ||
+										loc.getZ() != player.getLocation().getZ())){
+
+							player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
+							cancel();
+							return;
+						}
+
+						if(seconds==1)player.sendMessage(TextUtil.format("&eTeletransportando..."));
+
+						if(seconds <= 0){
+
+							Back.addPlayerLocation(player);
+							player.teleport(SurvivalManager.getLocation());
+
+							cancel();
+							return;
+						}
+
+						seconds--;
+					}
+				}.runTaskTimer(SurvivalPlugin.getInstance(), 0, 20);
+
 				return true;
 
 			}
