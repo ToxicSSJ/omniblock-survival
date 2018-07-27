@@ -87,10 +87,12 @@ public class SurvivalGUIExecutor implements GuiExecutor {
 					.lore("")
 					.lore(TextUtil.format("&8&m-&r &7Utiliza este comando"))
 					.lore(TextUtil.format("&7para teletransportarte"))
-					.lore(TextUtil.format("&7hacia un jugador."))
+					.lore(TextUtil.format("&7hacia un jugador o un"))
+					.lore(TextUtil.format("&7jugador hacia ti."))
 					.lore(TextUtil.format(""))
 					.lore(TextUtil.format("&7úsalo así: "))
 					.lore(TextUtil.format(" &7&e- &a/tpa <jugador>"))
+					.lore(TextUtil.format(" &7&e- &a/tpahere <jugador>"))
 
 					.build(), (Click, player) -> {
 

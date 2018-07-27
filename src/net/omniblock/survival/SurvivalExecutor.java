@@ -10,7 +10,7 @@ import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
-import net.omniblock.survival.utils.ChatUtils;
+import net.omniblock.survival.utils.HelpUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -71,7 +71,7 @@ public class SurvivalExecutor implements CommandExecutor {
 								}
 
 								if(SpigotVanishAPI.getVanishedPlayers().contains(toPlayer)) continue;
-								
+
 								SurvivalBankBase.removeMoney(player, moneyCache);
 								SurvivalBankBase.addMoney(toPlayer, moneyCache);
 								player.sendMessage(TextUtil.format("&7Le diste &a" + moneyCache + "⛃ &7a &a" + toPlayer.getName()));
@@ -84,10 +84,10 @@ public class SurvivalExecutor implements CommandExecutor {
 						player.sendMessage(TextUtil.format("&7El jugador no es valido."));
 						return true;
 
-					}catch (Exception e){}
+					}catch (Exception ignored){}
 				}
 
-				ChatUtils.cmdHelpMessage(player, "/pay <jugador> <dinero>", "/pay %player% 500");
+				HelpUtil.cmdFormat(player, "/pay <jugador> <dinero>", "/pay %player% 500");
 				return true;
 			}
 
@@ -188,7 +188,7 @@ public class SurvivalExecutor implements CommandExecutor {
 				}
 
 
-				ChatUtils.cmdHelpMessage(player, "/stoogle <scoreboard | bar>", "/st sb");
+				HelpUtil.cmdFormat(player, "/stoogle <scoreboard | bar>", "/st sb");
 				return true;
 			}
 		}

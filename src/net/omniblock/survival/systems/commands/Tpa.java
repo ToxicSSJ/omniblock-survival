@@ -8,7 +8,7 @@ import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.events.God;
-import net.omniblock.survival.utils.ChatUtils;
+import net.omniblock.survival.utils.HelpUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -83,7 +83,7 @@ public class Tpa implements CommandExecutor {
                 return true;
             }
 
-			ChatUtils.cmdHelpMessage(player, "/tpa <jugador>", "/tpa %player%");
+			HelpUtil.cmdFormat(player, "/tpa <jugador>", "/tpa %player%");
         }
 
         /*
@@ -117,7 +117,7 @@ public class Tpa implements CommandExecutor {
 				return true;
 			}
 
-			ChatUtils.cmdHelpMessage(player, "/tpahere <jugador>", "/tpahere %player%");
+			HelpUtil.cmdFormat(player, "/tpahere <jugador>", "/tpahere %player%");
 		}
 
         /*
@@ -319,72 +319,6 @@ public class Tpa implements CommandExecutor {
             }
         }.runTaskTimer(SurvivalPlugin.getInstance(), 0, 20);
     }
-
-	/**
-	 * Metodo para gestionar las peticiones
-	 *      * de la función /tpahere
-	 *
-	 * @param player Jugador que pide teletransporte
-	 * @param toPlayer Jugador al que se le pide el teletransporte
-	 */
-	/*
-    private void tpaHereRequest(Player player, Player toPlayer){
-		TPAHERE.put(toPlayer, player);
-
-		TextComponent message = new TextComponent("                ");
-
-		TextComponent accept = new TextComponent(TextUtil.format("&a&lAceptar"));
-		TextComponent deny = new TextComponent(TextUtil.format("&c&lDenegar"));
-
-		accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(TextUtil.format("&a&l✔  &7Aceptar la petición de &6&l" + player.getName())).create()));
-		deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(TextUtil.format("&c&l✖  &7Denegar la petición de &6&l" + player.getName())).create()));
-
-		accept.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/tphAccept " + player.getName() ));
-		deny.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/tphDeny " + player.getName() ));
-
-		message.addExtra(accept);
-		message.addExtra(TextUtil.format("     &8&l|&r     "));
-		message.addExtra(deny);
-
-		toPlayer.sendMessage("");
-		toPlayer.sendMessage(TextUtil.format(" &8» &eEl jugador &6" + player.getName() + " &e quiere que te teletransportes a él."));
-		toPlayer.spigot().sendMessage(message);
-		toPlayer.sendMessage("");
-
-
-		new BukkitRunnable() {
-			int seconds = 40;
-
-			@Override
-			public void run() {
-
-				if(!TPAHERE.containsKey(toPlayer)) {
-					cancel();
-					return;
-				}
-
-				//Si el jugador que realiza la petición cambia
-				if(!TPAHERE.get(toPlayer).getName().equals(player.getName())){
-					cancel();
-					return;
-				}
-
-				//Si algun jugador se desconecta o el conteo llega a 0
-				if(!(player.isOnline() && toPlayer.isOnline())
-						|| seconds <= 0){
-
-					TPAHERE.remove(toPlayer);
-					player.sendMessage(TextUtil.format("&cTu petición a &e"+toPlayer.getName()+"&c ha expirado."));
-					toPlayer.sendMessage(TextUtil.format("&eLa petición de &a"+player.getName()+"&e ha expirado."));
-					cancel();
-					return;
-				}
-
-				seconds--;
-			}
-		}.runTaskTimer(SurvivalPlugin.getInstance(), 0, 20);
-	}
-	*/
 
 	/**
 	 *
