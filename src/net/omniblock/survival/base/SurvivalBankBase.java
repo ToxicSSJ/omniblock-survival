@@ -1,7 +1,9 @@
 package net.omniblock.survival.base;
 
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
+import net.omniblock.network.library.utils.ExpirableCache;
 import org.bukkit.entity.Player;
 
 import net.omniblock.network.handlers.base.sql.make.MakeSQLQuery;
@@ -21,6 +23,8 @@ import net.omniblock.network.handlers.base.sql.util.SQLResultSet;
  *
  */
 public class SurvivalBankBase {
+
+	private static ExpirableCache<String, Integer> moneyCache = new ExpirableCache<>(10, TimeUnit.MINUTES);
 
 	/**
 	 * 
@@ -58,16 +62,23 @@ public class SurvivalBankBase {
 	 * @return Dinero del jugador.
 	 */
 	public static int getMoney(String param, boolean isNetworkID) {
+		String networkId = isNetworkID ? param : Resolver.getNetworkIDByName(param);
+
+		if(moneyCache.containsKey(networkId)) {
+			return moneyCache.get(networkId);
+		}
 
 		MakeSQLQuery msq = new MakeSQLQuery(TableType.SURVIVAL_BANK_DATA)
 				.select("p_money")
-				.where("p_id", isNetworkID ? param : Resolver.getNetworkIDByName(param));
+				.where("p_id", networkId);
 
 		try {
-			
 			SQLResultSet sqr = msq.execute();
 			if (sqr.next()) {
-				return sqr.get("p_money");
+				int money = sqr.get("p_money");
+				moneyCache.put(networkId, money);
+
+				return money;
 			}
 			
 		} catch (IllegalArgumentException | SQLException e) {
@@ -75,7 +86,6 @@ public class SurvivalBankBase {
 		}
 
 		return 0;
-		
 	}
 	
 	/**
@@ -84,13 +94,10 @@ public class SurvivalBankBase {
 	 * a un jugador.
 	 * 
 	 * @param player Jugador al cual se le dara el dinero.
-	 * @param quantity Cantidad de dinero a dar.
+	 * @param amount Cantidad de dinero a dar.
 	 */
-	public static void setMoney(Player player, int quantity) {
-
-		setMoney(player.getName(), quantity, false);
-		return;
-
+	public static void setMoney(Player player, int amount) {
+		setMoney(player.getName(), amount, false);
 	}
 	
 	/**
@@ -99,13 +106,10 @@ public class SurvivalBankBase {
 	 * un jugador, usando su nombre
 	 * 
 	 * @param name Nombre del jugador.
-	 * @param quantity Cantidad de dinero a dar. 
+	 * @param amount Cantidad de dinero a dar. 
 	 */
-	public static void setMoney(String name, int quantity) {
-
-		setMoney(name, quantity, false);
-		return;
-
+	public static void setMoney(String name, int amount) {
+		setMoney(name, amount, false);
 	}
 	
 	/**
@@ -114,27 +118,22 @@ public class SurvivalBankBase {
 	 * un jugador, usando la NetworkID.
 	 * 
 	 * @param param Nombre del jugador.
-	 * @param quantity Cantidad de dinero.
+	 * @param amount Cantidad de dinero.
 	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void setMoney(String param, int quantity, boolean isNetworkID) {
-
+	public static void setMoney(String param, int amount, boolean isNetworkID) {
+		String networkId = isNetworkID ? param : Resolver.getNetworkIDByName(param);
 		MakeSQLUpdate msu = new MakeSQLUpdate(TableType.SURVIVAL_BANK_DATA, TableOperation.UPDATE);
 
-		msu.rowOperation("p_money", quantity);
-		msu.whereOperation("p_id", isNetworkID ? param : Resolver.getNetworkIDByName(param));
+		msu.rowOperation("p_money", amount);
+		msu.whereOperation("p_id", networkId);
 
 		try {
-
 			msu.execute();
-			return;
-
+			moneyCache.put(networkId, amount);
 		} catch (IllegalArgumentException | SQLException e) {
 			e.printStackTrace();
 		}
-
-		return;
-
 	}
 	
 	/**
@@ -142,13 +141,10 @@ public class SurvivalBankBase {
 	 * Metodo para a�adir dinero a un jugaor
 	 * 
 	 * @param player Jugador.
-	 * @param quantity Cantidad.
+	 * @param amount Cantidad.
 	 */
-	public static void addMoney(Player player, int quantity) {
-
-		addMoney(player.getName(), quantity, false);
-		return;
-
+	public static void addMoney(Player player, int amount) {
+		addMoney(player.getName(), amount, false);
 	}
 
 	/**
@@ -157,13 +153,10 @@ public class SurvivalBankBase {
 	 * un jugador, usando su nombre.
 	 * 
 	 * @param name Nombre del jugador.
-	 * @param quantity Cantidad de dinero a dar. 
+	 * @param amount Cantidad de dinero a dar. 
 	 */
-	public static void addMoney(String name, int quantity) {
-
-		addMoney(name, quantity, false);
-		return;
-
+	public static void addMoney(String name, int amount) {
+		addMoney(name, amount, false);
 	}
 	
 	/**
@@ -172,15 +165,12 @@ public class SurvivalBankBase {
 	 * un jugador, usando la NetworkID.
 	 * 
 	 * @param param Nombre del jugador.
-	 * @param quantity Cantidad de dinero.
+	 * @param amount Cantidad de dinero.
 	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void addMoney(String param, int quantity, boolean isNetworkID) {
-
+	public static void addMoney(String param, int amount, boolean isNetworkID) {
 		int money = getMoney(param, isNetworkID);
-		setMoney(param, quantity + money, isNetworkID);
-		return;
-
+		setMoney(param, amount + money, isNetworkID);
 	}
 	
 	/**
@@ -188,13 +178,10 @@ public class SurvivalBankBase {
 	 * Metodo para remover dinero a un jugador.
 	 * 
 	 * @param player Jugador.
-	 * @param quantity Dinero que se va a remover.
+	 * @param amount Dinero que se va a remover.
 	 */
-	public static void removeMoney(Player player, int quantity) {
-
-		removeMoney(player.getName(), quantity, false);
-		return;
-
+	public static void removeMoney(Player player, int amount) {
+		removeMoney(player.getName(), amount, false);
 	}
 
 	/**
@@ -203,13 +190,10 @@ public class SurvivalBankBase {
 	 * del jugador.
 	 * 
 	 * @param name Nombre del jugador
-	 * @param quantity Cantidad de dinero que se va a remover.
+	 * @param amount Cantidad de dinero que se va a remover.
 	 */
-	public static void removeMoney(String name, int quantity) {
-
-		removeMoney(name, quantity, false);
-		return;
-
+	public static void removeMoney(String name, int amount) {
+		removeMoney(name, amount, false);
 	}
 	
 	/**
@@ -217,14 +201,11 @@ public class SurvivalBankBase {
 	 * Metodo para remover dinero, usando la NetworkID.
 	 * 
 	 * @param param Nombre del jugador.
-	 * @param quantity Cantidad de dinero a remover.
-	 * @param isNetworkID 
+	 * @param amount Cantidad de dinero a remover.
+	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void removeMoney(String param, int quantity, boolean isNetworkID) {
-
+	public static void removeMoney(String param, int amount, boolean isNetworkID) {
 		int money = getMoney(param, isNetworkID);
-		setMoney(param, (money - quantity < 0) ? 0 : money - quantity, isNetworkID);
-		return;
-
+		setMoney(param, money - amount, isNetworkID);
 	}
 }
