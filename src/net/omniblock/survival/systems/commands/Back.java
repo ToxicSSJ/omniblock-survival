@@ -62,9 +62,9 @@ public class Back implements CommandExecutor, Listener {
                     }
 
                     if(seconds < 3 &&
-                            (loc.getX() != player.getLocation().getX() ||
-                            loc.getY() != player.getLocation().getY() ||
-                            loc.getZ() != player.getLocation().getZ())){
+                            (loc.getBlockX() != player.getLocation().getBlockX() ||
+                            loc.getBlockY() != player.getLocation().getBlockY() ||
+                            loc.getBlockZ() != player.getLocation().getBlockZ())){
 
                         player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
                         cancel();
@@ -130,7 +130,7 @@ public class Back implements CommandExecutor, Listener {
      *          La locación del jugador.
      */
     public static void addPlayerLocation(Player player, Location loc){
-        backLocations.put(player, loc);
+        backLocations.put(player, loc.clone());
     }
 
     /**

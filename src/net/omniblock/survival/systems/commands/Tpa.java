@@ -8,6 +8,7 @@ import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.events.God;
+import net.omniblock.survival.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -55,12 +56,8 @@ public class Tpa implements CommandExecutor {
         TPA Command
          */
         if(cmd.getName().equalsIgnoreCase("tpa")){
-            if(args.length == 0){
-                player.sendMessage(TextUtil.format(
-                        "&6Utiliza &e/tpa <jugador>&6 para enviar una petición de teletransportación a este &ejugador&6."));
-                return true;
-            }
-            else {
+            if(args.length >= 1)
+            {
                 String toPlayerCache = args[0];
 
                 for(Player toPlayer : Bukkit.getServer().getOnlinePlayers()){
@@ -85,18 +82,16 @@ public class Tpa implements CommandExecutor {
 
                 return true;
             }
+
+			ChatUtils.cmdHelpMessage(player, "/tpa <jugador>", "/tpa %player%");
         }
 
         /*
         TPAHERE Command
          */
-        if(cmd.getName().equalsIgnoreCase("tpahere")){
-			if(args.length == 0){
-				player.sendMessage(TextUtil.format(
-						"&6Utiliza &e/tpahere <jugador>&6 para pedir a un &ejugador&6 que se teletransporte hacia ti."));
-				return true;
-			}
-			else{
+        if(cmd.getName().equalsIgnoreCase("tpahere")) {
+			if (args.length >= 1)
+			{
 				String toPlayerCache = args[0];
 
 				for(Player toPlayer : Bukkit.getServer().getOnlinePlayers()){
@@ -121,6 +116,8 @@ public class Tpa implements CommandExecutor {
 
 				return true;
 			}
+
+			ChatUtils.cmdHelpMessage(player, "/tpahere <jugador>", "/tpahere %player%");
 		}
 
         /*

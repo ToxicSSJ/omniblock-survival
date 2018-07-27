@@ -10,6 +10,7 @@ import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
+import net.omniblock.survival.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -86,7 +87,7 @@ public class SurvivalExecutor implements CommandExecutor {
 					}catch (Exception e){}
 				}
 
-				player.sendMessage(TextUtil.format("&7/pay &a<jugador> <dinero>"));
+				ChatUtils.cmdHelpMessage(player, "/pay <jugador> <dinero>", "/pay %player% 500");
 				return true;
 			}
 
@@ -187,7 +188,7 @@ public class SurvivalExecutor implements CommandExecutor {
 				}
 
 
-				player.sendMessage(TextUtil.format("&7/stoogle &e<scoreboard | bar>"));
+				ChatUtils.cmdHelpMessage(player, "/stoogle <scoreboard | bar>", "/st sb");
 				return true;
 			}
 		}
