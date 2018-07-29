@@ -384,9 +384,7 @@ public class Tpa implements CommandExecutor {
 					}
 
 					if(seconds <= 2 + god &&
-							(firstLoc.getX() != player.getLocation().getX() ||
-									firstLoc.getY() != player.getLocation().getY() ||
-									firstLoc.getZ() != player.getLocation().getZ())){
+							(player.getLocation().distanceSquared(firstLoc) > 1)){
 
 						player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
 						toPlayer.sendMessage(TextUtil.format("&c"+player.getName() +
