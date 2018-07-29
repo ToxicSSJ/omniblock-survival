@@ -61,123 +61,126 @@ import java.util.Map;
  */
 public class Back implements CommandExecutor, Listener {
 
-    private static Map<Player, Location> backLocations = new HashMap<>();
+	private static Map<Player, Location> backLocations = new HashMap<>();
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(!(sender instanceof Player)) return false;
-        Player player = (Player) sender;
+		if(!(sender instanceof Player)) return false;
+		Player player = (Player) sender;
 
-        //BACK Command
-        if(cmd.getName().equalsIgnoreCase("back")){
+		//BACK Command
+		if(cmd.getName().equalsIgnoreCase("back")){
 
-            if(!backLocations.containsKey(player)){
+			if(!backLocations.containsKey(player)){
 
-                player.sendMessage(TextUtil.format("&cAhora mismo no tienes ninguna lugar al cual volver."));
-                addPlayerLocation(player);
-                return true;
-            }
+				player.sendMessage(TextUtil.format("&cAhora mismo no tienes ninguna lugar al cual volver."));
+				addPlayerLocation(player);
+				return true;
+			}
 
-            player.sendMessage(TextUtil.format("&eSerás teletransportado en 3 segundos. ¡No te muevas!"));
+			player.sendMessage(TextUtil.format("&eSerás teletransportado en 3 segundos. ¡No te muevas!"));
 
-            new BukkitRunnable() {
-                int seconds = 3;
-                Location loc = player.getLocation().clone();
+			new BukkitRunnable() {
+				int seconds = 3;
+				Location loc = player.getLocation().clone();
 
-                @Override
-                public void run() {
+				@Override
+				public void run() {
 
-                    if(!player.isOnline()){
-                        cancel();
-                        return;
-                    }
+					if(!player.isOnline()){
+						cancel();
+						return;
+					}
 
-                    if(seconds < 3 &&
-                            (player.getLocation().distanceSquared(loc) > 1)){
+					//Location.distanceSquared usa de Math.sqrt, revertido a la lógica anterior.
+					if(seconds < 3 &&
+							(loc.getBlockX() != player.getLocation().getBlockX() ||
+									loc.getBlockY() != player.getLocation().getBlockY() ||
+									loc.getBlockZ() != player.getLocation().getBlockZ())){
 
-                        player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
-                        cancel();
-                        return;
-                    }
+						player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
+						cancel();
+						return;
+					}
 
-                    if(seconds==1)player.sendMessage(TextUtil.format("&eTeletransportando..."));
+					if(seconds==1)player.sendMessage(TextUtil.format("&eTeletransportando..."));
 
-                    if(seconds <= 0){
+					if(seconds <= 0){
 
-                        player.teleport(backLocations.get(player));
+						player.teleport(backLocations.get(player));
 
-                        cancel();
-                        return;
-                    }
+						cancel();
+						return;
+					}
 
-                    seconds--;
-                }
-            }.runTaskTimer(SurvivalPlugin.getInstance(), 0, 20);
+					seconds--;
+				}
+			}.runTaskTimer(SurvivalPlugin.getInstance(), 0, 20);
 
-            return true;
-        }
-        return false;
-    }
+			return true;
+		}
+		return false;
+	}
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e){
-        if(!backLocations.containsKey(e.getPlayer())) addPlayerLocation(e.getPlayer());
-    }
+	@EventHandler
+	public void onJoin(PlayerJoinEvent e){
+		if(!backLocations.containsKey(e.getPlayer())) addPlayerLocation(e.getPlayer());
+	}
 
-    @EventHandler
-    public void onTeleport(PlayerTeleportEvent e){
-        addPlayerLocation(e.getPlayer(), e.getFrom());
-    }
+	@EventHandler
+	public void onTeleport(PlayerTeleportEvent e){
+		addPlayerLocation(e.getPlayer(), e.getFrom());
+	}
 
-    @EventHandler
-    public void onDeath(PlayerDeathEvent e){
-        addPlayerLocation(e.getEntity());
-    }
+	@EventHandler
+	public void onDeath(PlayerDeathEvent e){
+		addPlayerLocation(e.getEntity());
+	}
 
-    /**
-     *
-     * Metodo que sirve para guardar la
-     * la locacion de un jugador
-     * para la función de back.
-     *
-     * @param player
-     *          Jugador del que se registra la locación.
-     */
-    public static void addPlayerLocation(Player player){
+	/**
+	 *
+	 * Metodo que sirve para guardar la
+	 * la locacion de un jugador
+	 * para la función de back.
+	 *
+	 * @param player
+	 *          Jugador del que se registra la locación.
+	 */
+	public static void addPlayerLocation(Player player){
 		addPlayerLocation(player, player.getLocation());
-    }
+	}
 
-    /**
-     *
-     * Metodo que sirve para guardar la
-     * locacipon de un jugador para
-     * la funcion de back.
-     *
-     * @param player
-     *          Jugador del que se registra la locación.
-     * @param loc
-     *          La locación del jugador.
-     */
-    public static void addPlayerLocation(Player player, Location loc){
+	/**
+	 *
+	 * Metodo que sirve para guardar la
+	 * locacipon de un jugador para
+	 * la funcion de back.
+	 *
+	 * @param player
+	 *          Jugador del que se registra la locación.
+	 * @param loc
+	 *          La locación del jugador.
+	 */
+	public static void addPlayerLocation(Player player, Location loc){
 		if(backLocations.containsKey(player))
 			if (backLocations.get(player).distanceSquared(loc) < 2.5)
 				return;
 
 		backLocations.put(player, loc.clone());
-    }
+	}
 
-    /**
-     *
-     * Metodo para guardar las locaciones
-     * de todos los jugadores en caso
-     * de que se haga reload del
-     * plugin y se eliminen las locaciones
-     * previamente guardadas
-     *
-     */
-    public static void saveLocations(){
-        for(Player player : Bukkit.getServer().getOnlinePlayers())
-            addPlayerLocation(player);
-    }
+	/**
+	 *
+	 * Metodo para guardar las locaciones
+	 * de todos los jugadores en caso
+	 * de que se haga reload del
+	 * plugin y se eliminen las locaciones
+	 * previamente guardadas
+	 *
+	 */
+	public static void saveLocations(){
+		for(Player player : Bukkit.getServer().getOnlinePlayers())
+			addPlayerLocation(player);
+	}
 }
