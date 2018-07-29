@@ -63,8 +63,8 @@ public class MovementDistanceView implements Listener {
 
 						if (p != null) {
 							if(minfo.movingUsingPotionOrVehicle) {
-								if (p.getViewDistance() != 5) {
-									p.setViewDistance(5);
+								if (p.getViewDistance() != 4) {
+									p.setViewDistance(4);
 								}
 							} else {
 								if (blocksMovedLastSecond < 15) {
