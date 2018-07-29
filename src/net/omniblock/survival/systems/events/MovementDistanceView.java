@@ -34,22 +34,55 @@ package net.omniblock.survival.systems.events;
 
 import net.omniblock.network.library.utils.ExpirablePlayerData;
 import net.omniblock.survival.SurvivalPlugin;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class MovementDistanceView {
+public class MovementDistanceView implements Listener {
 
-	private ExpirablePlayerData<Long> timeWatcher = new ExpirablePlayerData<>();
-	private ExpirablePlayerData<Integer> chunksCount = new ExpirablePlayerData<>();
+	private ExpirablePlayerData<MovementInfo> movementWatcher = new ExpirablePlayerData<>();
 
 	public MovementDistanceView() {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				timeWatcher.forEach((k,v) -> {
-					
+				movementWatcher.forEach((k, v) -> {
+					MovementInfo minfo = v;
+					long diff = System.currentTimeMillis() - minfo.movementPeriod;
+					if(diff >= 1000L) {
+						int blocksMovedLastSecond = minfo.blocksMoved;
+						minfo.movementPeriod = System.currentTimeMillis();
+						minfo.blocksMoved = 0;
+
+						Player p = Bukkit.getPlayer(k);
+
+						if (p != null) {
+							if(minfo.movingUsingPotionOrVehicle) {
+								if (p.getViewDistance() != 5) {
+									p.setViewDistance(5);
+								}
+							} else {
+								if (blocksMovedLastSecond < 15) {
+									if (p.getViewDistance() != 16) {
+										p.setViewDistance(16);
+									}
+								} else if (blocksMovedLastSecond < 20) {
+									if (p.getViewDistance() != 8) {
+										p.setViewDistance(8);
+									}
+								} else {
+									if (p.getViewDistance() != 5) {
+										p.setViewDistance(5);
+									}
+								}
+							}
+						}
+					}
 				});
 			}
 		}.runTaskTimer(SurvivalPlugin.getInstance(), 20, 20);
@@ -60,14 +93,27 @@ public class MovementDistanceView {
 		Location from = e.getFrom();
 		Location to = e.getTo();
 
-		if(!from.getChunk().equals(to.getChunk())) {
-			if(chunksCount.containsPlayer(e.getPlayer())) {
-				int currentCount = chunksCount.get(e.getPlayer());
-				chunksCount.put(e.getPlayer(), currentCount + 1);
+		if(from.getBlockX() != to.getBlockX() ||
+			from.getBlockY() != to.getBlockY() ||
+			from.getBlockZ() != to.getBlockZ())
+		{
+			if(movementWatcher.containsPlayer(e.getPlayer())) {
+				MovementInfo minfo = movementWatcher.get(e.getPlayer());
+				minfo.blocksMoved++;
+				minfo.movingUsingPotionOrVehicle = e.getPlayer().isInsideVehicle() || e.getPlayer().isGliding() || e.getPlayer().hasPotionEffect(PotionEffectType.SPEED);
 			} else {
-				chunksCount.put(e.getPlayer(), 1);
-				timeWatcher.put(e.getPlayer(), System.currentTimeMillis());
+				movementWatcher.put(e.getPlayer(), new MovementInfo());
 			}
+		}
+	}
+
+	private static class MovementInfo {
+		private long movementPeriod;
+		private int blocksMoved = 0;
+		private boolean movingUsingPotionOrVehicle = false;
+
+		public MovementInfo() {
+			this.movementPeriod = System.currentTimeMillis();
 		}
 	}
 

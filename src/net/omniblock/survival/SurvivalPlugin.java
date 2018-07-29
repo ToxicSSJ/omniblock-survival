@@ -62,8 +62,6 @@ public class SurvivalPlugin extends JavaPlugin {
 		SurvivalManager.setup();
 
 		Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival correctamente!");
-
-
 	}
 
 	@Override

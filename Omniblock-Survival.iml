@@ -35,17 +35,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Libs/Spigot_1_12_2_R1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../Libs/Spigot_1_12_2_R1.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../CompiledJars/ShopHandler.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -77,6 +66,17 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../Libs/PaperSpigot_1_12_2_R1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../Libs/PaperSpigot_1_12_2_R1.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
   </component>
