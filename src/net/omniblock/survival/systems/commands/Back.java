@@ -93,11 +93,7 @@ public class Back implements CommandExecutor, Listener {
 						return;
 					}
 
-					//Location.distanceSquared usa de Math.sqrt, revertido a la lógica anterior.
-					if(seconds < 3 &&
-							(loc.getBlockX() != player.getLocation().getBlockX() ||
-									loc.getBlockY() != player.getLocation().getBlockY() ||
-									loc.getBlockZ() != player.getLocation().getBlockZ())){
+					if(seconds < 3 && loc.distance(player.getLocation()) > 1D){
 
 						player.sendMessage(TextUtil.format("&c¡Te has movido! Teletransporte cancelado."));
 						cancel();
