@@ -160,8 +160,9 @@ public class Back implements CommandExecutor, Listener {
 	 */
 	public static void addPlayerLocation(Player player, Location loc){
 		if(backLocations.containsKey(player))
-			if (backLocations.get(player).distanceSquared(loc) < 2.5)
-				return;
+			if (backLocations.get(player).getWorld().getName().equals(loc.getWorld().getName()))
+				if( backLocations.get(player).distanceSquared(loc) < 2.5)
+					return;
 
 		backLocations.put(player, loc.clone());
 	}

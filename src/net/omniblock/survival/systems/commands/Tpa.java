@@ -397,7 +397,7 @@ public class Tpa implements CommandExecutor {
 						player.sendMessage(TextUtil.format("&eTeletransportando..."));
 
 					if(seconds <= god){
-						Back.addPlayerLocation(player);
+
 						player.teleport(toPlayer);
 
 						if(!God.GODS.contains(player)){
