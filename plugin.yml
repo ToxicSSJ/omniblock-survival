@@ -39,3 +39,7 @@ commands:
       description: Comando para cambiar ajustes
    st:
       description: Comando para cambiar ajustes
+   pvp:
+      description: Comando para cambiar el pvp del jugador.
+   spvp:
+      description: Comando para cambiar el pvp global,

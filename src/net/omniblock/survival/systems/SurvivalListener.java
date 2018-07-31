@@ -39,6 +39,7 @@ import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.events.God;
 import net.omniblock.survival.systems.events.MovementDistanceView;
+import net.omniblock.survival.systems.events.Pvp;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -48,6 +49,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.network.systems.ActionsPatcher;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -64,16 +66,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SurvivalListener {
 
 	public static void listen() {
-		
+
 		ActionsPatcher.setup();
 
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new Listener() {
-			
+
 			@EventHandler
 			public void onJoin(PlayerJoinEvent e) {
 
-				new BukkitRunnable(){
+				new BukkitRunnable() {
 
 					@Override
 					public void run() {
@@ -84,7 +86,7 @@ public class SurvivalListener {
 						e.getPlayer().setAllowFlight(false);
 						e.getPlayer().setFlying(false);
 
-						e.getPlayer().sendMessage(new String[] {
+						e.getPlayer().sendMessage(new String[]{
 
 								TextUtil.getCenteredMessage("&8---------------------------------------------------"),
 								TextUtil.getCenteredMessage("&7Bienvenido al &b&lSURVIVAL &7" + e.getPlayer().getName() + "!"),
@@ -108,14 +110,13 @@ public class SurvivalListener {
         				*/
 						Location loc = e.getPlayer().getLocation().add(0, -1, 0).clone();
 
-						while (loc.getBlock().isEmpty() && loc.getBlockY() >= 0 && loc.getBlockY() <= 2000){
+						while (loc.getBlock().isEmpty() && loc.getBlockY() >= 0 && loc.getBlockY() <= 2000) {
 							loc.add(0, -1, 0);
 						}
 
-						if(0 > loc.getBlockY() || loc.getBlockY() > 2000)	//Si el jugador está fuera de los limites
+						if (0 > loc.getBlockY() || loc.getBlockY() > 2000)    //Si el jugador está fuera de los limites
 							e.getPlayer().teleport(loc.getWorld().getHighestBlockAt(loc).getLocation());
-						else
-						{
+						else {
 							loc.add(0, 1, 0);
 							e.getPlayer().teleport(loc);
 						}
@@ -123,21 +124,22 @@ public class SurvivalListener {
 						/*
 						Actualizar el resource pack del jugador si tiene el de sky wars Z
 						 */
-                        ResourceHandler.sendResourcePack(e.getPlayer(), ResourceType.OMNIBLOCK_DEFAULT);
+						ResourceHandler.sendResourcePack(e.getPlayer(), ResourceType.OMNIBLOCK_DEFAULT);
 
                         /*
                         Añadir al jugador a la boss bar
                          */
-						if(!SurvivalManager.bar.getPlayers().contains(e.getPlayer()))
+						if (!SurvivalManager.bar.getPlayers().contains(e.getPlayer()))
 							SurvivalManager.bar.addPlayer(e.getPlayer());
 
 					}
 				}.runTaskLater(SurvivalPlugin.getInstance(), 2L);
 
 			}
-			
+
 		}, SurvivalPlugin.getInstance());
 
+		pm.registerEvents(new Pvp(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new Back(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new God(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new MovementDistanceView(), SurvivalPlugin.getInstance());

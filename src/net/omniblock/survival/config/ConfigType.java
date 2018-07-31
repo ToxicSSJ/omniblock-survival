@@ -48,7 +48,8 @@ import net.omniblock.survival.SurvivalPlugin;
  */
 public enum ConfigType {
 
-		 CONFIG(new Config(SurvivalPlugin.getInstance(), "data/config.yml")),
+		CONFIG(new Config(SurvivalPlugin.getInstance(), "data/config.yml")),
+		PVP(new Config(SurvivalPlugin.getInstance(), "data/pvp.yml")),
 
 	;
 

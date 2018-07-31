@@ -34,6 +34,7 @@ package net.omniblock.survival;
 
 import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.network.systems.rank.type.RankType;
 import net.omniblock.packets.network.Packets;
 import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;
@@ -42,6 +43,7 @@ import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
+import net.omniblock.survival.systems.events.Pvp;
 import net.omniblock.survival.utils.HelpUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -219,8 +221,42 @@ public class SurvivalExecutor implements CommandExecutor {
 					}
 				}
 
-
 				HelpUtil.cmdFormat(player, "/stoogle <scoreboard | bar>", "/st sb");
+				return true;
+			}
+
+			if(cmd.getName().equalsIgnoreCase("pvp")){
+
+				if(args.length>0){
+					if(args[0].equalsIgnoreCase("on")){
+						Pvp.activate(player);
+					}
+					if(args[0].equalsIgnoreCase("off")){
+						Pvp.desactivate(player);
+					}
+				}
+				else
+					Pvp.switchPlayerPvp(player);
+
+				player.sendMessage(TextUtil.format("&c&l[PvP]&a» Has " + (Pvp.hasPvp(player) ? "activado" : "desactivado") + " tu pvp."));
+				return true;
+			}
+
+			if(cmd.getName().equalsIgnoreCase("spvp")){
+				if(!(RankType.getByName(player.getName()).isStaff() ||
+						player.isOp())) return false;
+
+				if(args.length>0){
+					if(args[0].equalsIgnoreCase("on")){
+						Pvp.setPvp(true);
+					}
+					if(args[0].equalsIgnoreCase("off")){
+						Pvp.setPvp(false);
+					}
+				}
+				else
+					Pvp.switchSurvivalPvp();
+				player.sendMessage(TextUtil.format("&c&l[PvP]&a» Has " + (Pvp.isPvp() ? "activado" : "desactivado") + " el pvp."));
 				return true;
 			}
 		}
