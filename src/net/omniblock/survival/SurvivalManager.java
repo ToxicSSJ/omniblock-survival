@@ -39,7 +39,6 @@ import net.omniblock.survival.systems.SurvivalBox;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.Tpa;
 import net.omniblock.survival.systems.commands.gui.RegisterGUI;
-import net.omniblock.survival.systems.events.Pvp;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -49,8 +48,6 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-
-import java.util.Arrays;
 
 /**
  * 
@@ -123,15 +120,6 @@ public class SurvivalManager {
 			} catch (Exception e) { e.printStackTrace(); }
 		}
 
-		if(ConfigType.PVP.getConfig().isSet("deathList")){
-
-			try {
-
-				Pvp.loadToDiePlayers();
-
-			}catch (Exception e) { e.printStackTrace(); }
-		}
-
 		RegisterGUI.registerGUI(new SurvivalGUIExecutor());
 
 		SurvivalExecutor executor = new SurvivalExecutor();
@@ -147,8 +135,6 @@ public class SurvivalManager {
 				"help",
 				"stoggle",
 				"st",
-				"pvp",
-				"spvp"
 		};
         String[] tpaCommands = new String[]{
                 "tpa",

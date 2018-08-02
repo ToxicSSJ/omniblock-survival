@@ -39,7 +39,6 @@ import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.events.God;
 import net.omniblock.survival.systems.events.MovementDistanceView;
-import net.omniblock.survival.systems.events.Pvp;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -49,7 +48,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.network.systems.ActionsPatcher;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -139,7 +137,6 @@ public class SurvivalListener {
 
 		}, SurvivalPlugin.getInstance());
 
-		pm.registerEvents(new Pvp(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new Back(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new God(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new MovementDistanceView(), SurvivalPlugin.getInstance());
