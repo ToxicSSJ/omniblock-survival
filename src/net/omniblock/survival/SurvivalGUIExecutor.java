@@ -113,6 +113,22 @@ public class SurvivalGUIExecutor implements GuiExecutor {
 				return;
 
 			}),
+				new ItemGUI(new ItemBuilder(Material.DIAMOND_SWORD)
+						.name(TextUtil.format("&2PvP"))
+						.lore("")
+						.lore(TextUtil.format("&8&m-&r &7Utiliza este comando"))
+						.lore(TextUtil.format("&7para activar o desactivar"))
+						.lore(TextUtil.format("&7tu estado de pvp."))
+						.lore(TextUtil.format(""))
+						.lore(TextUtil.format("&7úsalo así: "))
+						.lore(TextUtil.format(" &7&e- &a/pvp [on|off]"))
+						.build(), (Click, player) -> {
+
+					player.sendMessage(TextUtil.format("&7Utiliza &e/pvp [on|off]"));
+					player.closeInventory();
+					return;
+
+				}),
 			new ItemGUI(new ItemBuilder(Material.SKULL_ITEM)
 					.durability((short) 3)
 					.name(TextUtil.format("&2tpa"))

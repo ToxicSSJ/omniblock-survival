@@ -36,6 +36,7 @@ import net.omniblock.jobs.api.listener.jobs.structure.Job;
 import net.omniblock.jobs.api.type.JobType;
 import net.omniblock.jobs.base.object.PlayerJobWrapper;
 import net.omniblock.modtools.api.SpigotVanishAPI;
+import net.omniblock.net.pvp.managers.PlayerPvpManager;
 import net.omniblock.network.handlers.base.bases.type.RankBase;
 import net.omniblock.network.library.helpers.scoreboard.ScoreboardUtil;
 import net.omniblock.network.library.utils.TextUtil;
@@ -100,7 +101,7 @@ public class SurvivalScoreBoard {
 						player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
 			}
-		}.runTaskTimer(SurvivalPlugin.getInstance(), 0L, 10L);
+		}.runTaskTimer(SurvivalPlugin.getInstance(), 0L, 20L);
 	}
 
 	private static void updateScoreboard(Player player, String title, int onlinePlayers){
@@ -116,20 +117,21 @@ public class SurvivalScoreBoard {
 
 		if(playerJob != null)
 			ScoreboardUtil.unrankedSidebarDisplay(player, new String[]{
-				title,
-				TextUtil.format(" "),
-				TextUtil.format("&7Jugador: &b"+player.getName()),
-				TextUtil.format("&7Rango: &b" + (rank == RankType.USER ? "&b(&7Usuario&b)" : rank.getPrefix())),
-				TextUtil.format("&7Dinero: &b"+ SurvivalBankBase.getMoney(player) + " ⛃"),
-				TextUtil.format("  "),
-				TextUtil.format("&7Trabajo: &b" + playerJob.getJobType().getName()),
-				TextUtil.format("&7Nivel: &b" + playerJob.getPrestige()),
-				TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&8 / &b" + playerJob.getPrestige() * 4 + "k"),
-				TextUtil.format("   "),
-				TextUtil.format("&7Jugadores: &b" + onlinePlayers),
-				TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
-				TextUtil.format("    "),
-				TextUtil.format("&emc.omniblock.net")
+					title,
+					TextUtil.format(" "),
+					TextUtil.format("&7Jugador: &b"+player.getName()),
+					TextUtil.format("&7Rango: &b" + (rank == RankType.USER ? "&b(&7Usuario&b)" : rank.getPrefix())),
+					TextUtil.format("&7Dinero: &b"+ SurvivalBankBase.getMoney(player) + " ⛃"),
+					TextUtil.format("&7Pvp: &b" + (PlayerPvpManager.hasPvp(player) ? "Activado &c⚔": "Desactivado")),
+					TextUtil.format("  "),
+					TextUtil.format("&7Trabajo: &b" + playerJob.getJobType().getName()),
+					TextUtil.format("&7Nivel: &b" + playerJob.getPrestige()),
+					TextUtil.format("&7Exp: &b" + playerJob.getXP() + "&8 / &b" + playerJob.getPrestige() * 4 + "k"),
+					TextUtil.format("   "),
+					TextUtil.format("&7Jugadores: &b" + onlinePlayers),
+					TextUtil.format("&7Ping: &b" + ((CraftPlayer) player).getHandle().ping),
+					TextUtil.format("    "),
+					TextUtil.format("&emc.omniblock.net")
 
 			}, false);
 		else
