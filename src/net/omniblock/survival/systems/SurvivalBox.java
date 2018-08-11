@@ -51,8 +51,7 @@ public class SurvivalBox extends MysteryBox  {
 
 	@Override
 	public void craftBox() {
-
-		this.getBase().setType(Material.ENDER_PORTAL_FRAME);
+		this.getBase().setType(Material.END_PORTAL_FRAME);
 		this.getBox().setType(Material.CHEST);
 	}
 

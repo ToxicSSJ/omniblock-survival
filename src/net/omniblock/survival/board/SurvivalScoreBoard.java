@@ -44,7 +44,7 @@ import net.omniblock.network.systems.rank.type.RankType;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.base.SurvivalBankBase;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_13_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;

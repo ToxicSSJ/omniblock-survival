@@ -48,6 +48,7 @@ public class MovementDistanceView implements Listener {
 	private ExpirablePlayerData<MovementInfo> movementWatcher = new ExpirablePlayerData<>();
 
 	public MovementDistanceView() {
+		/** TODO: PAPERSPIGOT 1.13
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -86,6 +87,7 @@ public class MovementDistanceView implements Listener {
 				});
 			}
 		}.runTaskTimer(SurvivalPlugin.getInstance(), 20, 20);
+		 **/
 	}
 
 	@EventHandler

@@ -2,6 +2,7 @@ name: Survival
 main: net.omniblock.survival.SurvivalPlugin
 softdepend: [OmniNetwork, OmniRegions, ShopHandler]
 version: 1.1.0
+api-version: 1.13
 commands:
    dinero:
       description: Comando para ver tu dinero.

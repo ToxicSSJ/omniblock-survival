@@ -81,7 +81,7 @@ public class SurvivalGUIExecutor implements GuiExecutor {
 				return;
 
 			}),
-			new ItemGUI(new ItemBuilder(Material.DOUBLE_PLANT)
+			new ItemGUI(new ItemBuilder(Material.SUNFLOWER)
 					.name(TextUtil.format("&2Dinero"))
 					.lore("")
 					.lore(TextUtil.format("&8&m-&r &7Utiliza este comando"))
@@ -129,8 +129,7 @@ public class SurvivalGUIExecutor implements GuiExecutor {
 					return;
 
 				}),
-			new ItemGUI(new ItemBuilder(Material.SKULL_ITEM)
-					.durability((short) 3)
+			new ItemGUI(new ItemBuilder(Material.PLAYER_HEAD)
 					.name(TextUtil.format("&2tpa"))
 					.lore("")
 					.lore(TextUtil.format("&8&m-&r &7Utiliza este comando"))
