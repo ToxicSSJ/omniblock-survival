@@ -32,7 +32,11 @@
 
 package net.omniblock.survival;
 
+import net.omniblock.survival.hook.MVdWHook;
+import net.omniblock.survival.hook.PAPIHook;
 import net.omniblock.survival.systems.SurvivalListener;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.omniblock.network.handlers.Handlers;
@@ -47,21 +51,19 @@ public class SurvivalPlugin extends JavaPlugin {
 	public void onEnable() {
 		
 		instance = this;
-		
-		if(NetworkManager.getServertype() != ServerType.SURVIVAL) {
-			
-			Handlers.LOGGER.sendModuleInfo("&7Se ha registrado Survival v" + this.getDescription().getVersion() + "!");
-			Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival en modo API!");
-			return;
-			
-		}
-		
-		Handlers.LOGGER.sendModuleInfo("&7Se ha registrado Survival v" + this.getDescription().getVersion() + "!");
+
+		getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Se ha registrado Survival v" + this.getDescription().getVersion() + "!"));
 
 		SurvivalListener.listen();
 		SurvivalManager.setup();
 
-		Handlers.LOGGER.sendModuleMessage("Survival", "Se ha inicializado Survival correctamente!");
+		if(Bukkit.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI"))
+			new PAPIHook(this).hook();
+
+		if(Bukkit.getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI"))
+			MVdWHook.hook();
+
+		getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "Se ha inicializado Survival correctamente!"));
 	}
 
 	@Override

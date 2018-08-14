@@ -34,7 +34,6 @@ package net.omniblock.survival;
 
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.shop.systems.MysteryBoxHandler;
-import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.SurvivalBox;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.Tpa;
@@ -86,15 +85,6 @@ public class SurvivalManager {
 	 *
 	 */
 	protected static SurvivalBox survivalBox;
-
-	/**
-	 *
-	 *
-	 * Bossbar para survival
-	 *
-	 *
-	 */
-	public static BossBar bar;
 	
 	/**
 	 * 
@@ -158,10 +148,6 @@ public class SurvivalManager {
 
         Back.saveLocations();
 
-		SurvivalScoreBoard.initialize();
-
-		bar = Bukkit.createBossBar(TextUtil.format("&b&lOmniblock Network &8« &aSurvival &8»"),
-				BarColor.BLUE, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 	}
 	
 	/**

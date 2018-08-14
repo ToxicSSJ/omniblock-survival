@@ -34,13 +34,11 @@ package net.omniblock.survival;
 
 import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
-import net.omniblock.network.systems.rank.type.RankType;
 import net.omniblock.packets.network.Packets;
 import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;
 import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
-import net.omniblock.survival.board.SurvivalScoreBoard;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
 import net.omniblock.survival.utils.HelpUtil;
@@ -182,47 +180,6 @@ public class SurvivalExecutor implements CommandExecutor {
 
 			}
 
-			if(cmd.getName().equalsIgnoreCase("stoggle") ||
-					cmd.getName().equalsIgnoreCase("st")){
-
-				if(args.length > 0){
-
-					if(args[0].equalsIgnoreCase("scoreboard") ||
-							args[0].equalsIgnoreCase("sb")){
-
-						if(SurvivalScoreBoard.blackList.contains(player)){
-
-							SurvivalScoreBoard.blackList.remove(player);
-							player.sendMessage(TextUtil.format("&aScoreboard activada."));
-						}
-						else {
-							SurvivalScoreBoard.blackList.add(player);
-							player.sendMessage(TextUtil.format("&aScoreboard desactivada."));
-						}
-
-						return true;
-					}
-
-					if(args[0].equalsIgnoreCase("bar") ||
-							args[0].equalsIgnoreCase("bossbar")){
-
-						if(SurvivalManager.bar.getPlayers().contains(player)) {
-
-							SurvivalManager.bar.removePlayer(player);
-							player.sendMessage(TextUtil.format("&aBossbar desactivada."));
-						}
-						else {
-							SurvivalManager.bar.addPlayer(player);
-							player.sendMessage(TextUtil.format("&aBossbar activada."));
-						}
-
-						return true;
-					}
-				}
-
-				HelpUtil.cmdFormat(player, "/stoogle <scoreboard | bar>", "/st sb");
-				return true;
-			}
 		}
 
 		return false;
