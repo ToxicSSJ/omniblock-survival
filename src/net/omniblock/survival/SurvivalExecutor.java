@@ -39,9 +39,11 @@ import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;
 import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
+import net.omniblock.survival.config.ConfigType;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
 import net.omniblock.survival.utils.HelpUtil;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -49,6 +51,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 public class SurvivalExecutor implements CommandExecutor {
 
@@ -123,13 +128,28 @@ public class SurvivalExecutor implements CommandExecutor {
 			}
 
 			if(cmd.getName().equalsIgnoreCase("hub") ||
-					cmd.getName().equalsIgnoreCase("lobby")){
+					cmd.getName().equalsIgnoreCase("lobby") ||
+					cmd.getName().equalsIgnoreCase("lub")){
 
-				Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
+				/*Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
 						.setPlayername(player.getName())
 						.setServertype(ServerType.MAIN_LOBBY_SERVER)
 						.setParty(false)
-						.build().setReceiver(PacketSenderType.OMNICORE));
+						.build().setReceiver(PacketSenderType.OMNICORE));*/
+
+				String lobby = ConfigType.CONFIG.getConfig().getString("hub");
+
+				player.sendMessage(TextUtil.format("&b&lOmniblock :: &7Conectando a Lobby"));
+				ByteArrayOutputStream b = new ByteArrayOutputStream();
+				DataOutputStream out = new DataOutputStream(b);
+				try {
+					out.writeUTF("Connect");
+					out.writeUTF(lobby);
+				} catch (IOException eee) {
+					Bukkit.getLogger().info("Error al conectar con lobby1");
+				}
+				player.sendPluginMessage(SurvivalPlugin.getInstance(), "BungeeCord", b.toByteArray());
+
 
 				return true;
 

@@ -109,6 +109,15 @@ public class SurvivalManager {
 				
 			} catch (Exception e) { e.printStackTrace(); }
 		}
+		if(!ConfigType.CONFIG.getConfig().isSet("hub")) {
+
+			try {
+
+				ConfigType.CONFIG.getConfig().set("hub", "lobby1");
+				ConfigType.CONFIG.getConfigObject().save();
+
+			} catch (Exception e) { e.printStackTrace(); }
+		}
 
 		RegisterGUI.registerGUI(new SurvivalGUIExecutor());
 
@@ -119,6 +128,7 @@ public class SurvivalManager {
 				"spawn",
 				"lobby",
 				"hub",
+				"lub",
 				"fly",
 				"pay",
 				"ayuda",

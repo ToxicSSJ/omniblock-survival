@@ -37,6 +37,7 @@ import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.events.God;
 import net.omniblock.survival.systems.events.MovementDistanceView;
+import net.omniblock.survival.utils.TitleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -84,18 +85,21 @@ public class SurvivalListener {
 
 						e.getPlayer().sendMessage(new String[]{
 
-								TextUtil.getCenteredMessage("&8---------------------------------------------------"),
-								TextUtil.getCenteredMessage("&7Bienvenido al &b&lSURVIVAL &7" + e.getPlayer().getName() + "!"),
 								"",
-								TextUtil.format("&f&l(!) &7No olvides visitar nuestro foro para interactuar con toda"),
-								TextUtil.format("&7la comunidad."),
-								TextUtil.format("&f&l(!) &7No olvides que puedes recibir recompensas si votas por"),
-								TextUtil.format("&7el servidor en los tops."),
 								"",
-								TextUtil.format("    &f&nFORO:&e www.omniblock.net       &f&nTIENDA:&a tienda.omniblock.net"),
-								TextUtil.getCenteredMessage("&8---------------------------------------------------")
+								TextUtil.getCenteredMessage("&f Bienvenido/a a &a&lSURVIVAL &f" + e.getPlayer().getName() + "!"),
+								"",
+								TextUtil.getCenteredMessage("&a&l(!) &aVisita nuestra web: &eomniblock.net"),
+								TextUtil.getCenteredMessage("&a&l(!) &aTienda: &etienda.omniblock.net"),
+								TextUtil.getCenteredMessage("&a&l(!) &aDiscord: &ediscord.gg/nYj6S2V"),
+								"",
+								TextUtil.getCenteredMessage("&aAyuda: &b/ayuda"),
+								""
 
 						});
+
+						TitleUtil.sendTitle(e.getPlayer(), TextUtil.format("&f&k..&a&l SURVIVAL &f&k.."));
+						TitleUtil.sendSubTitle(e.getPlayer(), TextUtil.format("&fBienvenido/a &b"+e.getPlayer().getName()));
 
 						/*
         				Sistema para evitar que un jugador muera por estár en el aire al conectarse

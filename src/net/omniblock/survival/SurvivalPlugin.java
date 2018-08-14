@@ -32,18 +32,22 @@
 
 package net.omniblock.survival;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 import net.omniblock.survival.hook.MVdWHook;
 import net.omniblock.survival.hook.PAPIHook;
 import net.omniblock.survival.systems.SurvivalListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.omniblock.network.handlers.Handlers;
 import net.omniblock.network.handlers.network.NetworkManager;
 import net.omniblock.packets.object.external.ServerType;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
-public class SurvivalPlugin extends JavaPlugin {
+public class SurvivalPlugin extends JavaPlugin implements PluginMessageListener {
 
 	private static SurvivalPlugin instance;
 
@@ -64,6 +68,9 @@ public class SurvivalPlugin extends JavaPlugin {
 			MVdWHook.hook();
 
 		getServer().getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', "Se ha inicializado Survival correctamente!"));
+
+		this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+		this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
 	}
 
 	@Override
@@ -75,5 +82,17 @@ public class SurvivalPlugin extends JavaPlugin {
 	public static SurvivalPlugin getInstance() {
 		return instance;
 	}
-	
+
+	@Override
+	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+		if (!channel.equals("BungeeCord")) {
+			return;
+		}
+		ByteArrayDataInput in = ByteStreams.newDataInput(message);
+		String subchannel = in.readUTF();
+		if (subchannel.equals("SomeSubChannel")) {
+			// Use the code sample in the 'Response' sections below to read
+			// the data.
+		}
+	}
 }
