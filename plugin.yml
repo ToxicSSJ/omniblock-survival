@@ -8,12 +8,6 @@ commands:
       description: Comando para ver tu dinero.
    money:
       description: Comando para ver tu dinero.
-   lobby:
-      description: Comando para volver al lobby principal.
-   hub:
-      description: Comando para volver al lobby principal.
-   lub:
-      description: Comando para volver al lobby principal.
    spawn:
       description: Comando para volver al spawn.
    tpa:

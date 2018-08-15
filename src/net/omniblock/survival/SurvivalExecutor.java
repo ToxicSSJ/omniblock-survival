@@ -127,15 +127,9 @@ public class SurvivalExecutor implements CommandExecutor {
 				return true;
 			}
 
+			/*
 			if(cmd.getName().equalsIgnoreCase("hub") ||
-					cmd.getName().equalsIgnoreCase("lobby") ||
-					cmd.getName().equalsIgnoreCase("lub")){
-
-				/*Packets.STREAMER.streamPacket(new PlayerSendToServerPacket()
-						.setPlayername(player.getName())
-						.setServertype(ServerType.MAIN_LOBBY_SERVER)
-						.setParty(false)
-						.build().setReceiver(PacketSenderType.OMNICORE));*/
+					cmd.getName().equalsIgnoreCase("lobby")){
 
 				String lobby = ConfigType.CONFIG.getConfig().getString("hub");
 
@@ -154,6 +148,7 @@ public class SurvivalExecutor implements CommandExecutor {
 				return true;
 
 			}
+			*/
 
 			if(cmd.getName().equalsIgnoreCase("spawn")){
 
