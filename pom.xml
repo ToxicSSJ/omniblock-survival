@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Omniblock Developers Team - Copyright (C) 2018 - All Rights Reserved
+  ~
+  ~ 1. This software is not a free license software, you are not authorized to read, copy, modify, redistribute or
+  ~ alter this file in any form without the respective authorization and consent of the Omniblock Developers Team.
+  ~
+  ~ 2. If you have acquired this file violating the previous clause described in this Copyright Notice then you must
+  ~ destroy this file from your hard disk or any other storage device.
+  ~
+  ~ 3. As described in the clause number one, no third party are allowed to read, copy, modify, redistribute or
+  ~ alter this file in any form without the respective authorization and consent of the Omniblock Developers Team.
+  ~
+  ~ 4. Any concern about this Copyright Notice must be discussed at our support email: soporte.omniblock@gmail.com
+  ~ =============================================================================================================
+  ~
+  ~ Equipo de Desarrollo de Omniblock - Copyright (C) 2018 - Todos los Derechos Reservados
+  ~
+  ~ 1. Este software no es un software de libre uso, no está autorizado a leer, copiar, modificar, redistribuir
+  ~ o alterar este archivo de ninguna manera sin la respectiva autorización y consentimiento del
+  ~ Equipo de Desarrollo de Omniblock.
+  ~
+  ~ 2. Si usted ha adquirido este archivo violando la clausula anterior descrita en esta Noticia de Copyright entonces
+  ~ usted debe destruir este archivo de su unidad de disco duro o de cualquier otro dispositivo de almacenamiento.
+  ~
+  ~ 3. Como se ha descrito en la cláusula número uno, ningun tercero está autorizado a leer, copiar, modificar,
+  ~ redistribuir o alterar este archivo de ninguna manera sin la respectiva autorización y consentimiento del
+  ~ Equipo de Desarrollo de Omniblock.
+  ~
+  ~ 4. Cualquier duda acerca de esta Noticia de Copyright deberá ser discutido mediante nuestro correo de soporte:
+  ~ soporte.omniblock@gmail.com
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.omniblock.plugins</groupId>
+    <artifactId>Omniblock-Survival</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <repositories>
+        <repository>
+            <id>omniblock-snapshot</id>
+            <url>http://omniblock.net:8081/artifactory/list/Omniblock/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-jobs</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/Omniblock-Jobs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-modtools</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/Omniblock-ModTools.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-pvp</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/Omniblock-Pvp.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-packets</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/OmniblockPackets.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-regions</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/OmniblockRegions.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>placeholder</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Libs/PlaceholderAPI-2.9.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-shophandler</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/ShopHandler.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>spigot</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Libs/Spigot_1_13_R1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>omniblock-network</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../CompiledJars/Omniblock-Network.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.thirdparty</groupId>
+            <artifactId>MVdWPlaceholderAPI</artifactId>
+            <version>latest</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Libs/MVdWPlaceholderAPI.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.dependencies</groupId>
+            <artifactId>EssentialsUtils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <outputDirectory>../CompiledJars/Plugins/</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>omniblock-central</id>
+            <name>Omniblock-Releases</name>
+            <url>http://omniblock.net:8081/artifactory/Omniblock</url>
+        </repository>
+        <snapshotRepository>
+            <id>omniblock-snapshot</id>
+            <name>Omniblock-Snapshots</name>
+            <url>http://omniblock.net:8081/artifactory/Omniblock</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
+</project>

@@ -15,44 +15,54 @@
  *
  * Equipo de Desarrollo de Omniblock - Copyright (C) 2018 - Todos los Derechos Reservados
  *
- * 1. Este software no es un software de libre uso, no est· autorizado a leer, copiar, modificar, redistribuir
- * o alterar este archivo de ninguna manera sin la respectiva autorizaciÛn y consentimiento del
+ * 1. Este software no es un software de libre uso, no est√° autorizado a leer, copiar, modificar, redistribuir
+ * o alterar este archivo de ninguna manera sin la respectiva autorizaci√≥n y consentimiento del
  * Equipo de Desarrollo de Omniblock.
  *
  * 2. Si usted ha adquirido este archivo violando la clausula anterior descrita en esta Noticia de Copyright entonces
  * usted debe destruir este archivo de su unidad de disco duro o de cualquier otro dispositivo de almacenamiento.
  *
- * 3. Como se ha descrito en la cl·usula n˙mero uno, ningun tercero est· autorizado a leer, copiar, modificar,
- * redistribuir o alterar este archivo de ninguna manera sin la respectiva autorizaciÛn y consentimiento del
+ * 3. Como se ha descrito en la cl√°usula n√∫mero uno, ningun tercero est√° autorizado a leer, copiar, modificar,
+ * redistribuir o alterar este archivo de ninguna manera sin la respectiva autorizaci√≥n y consentimiento del
  * Equipo de Desarrollo de Omniblock.
  *
- * 4. Cualquier duda acerca de esta Noticia de Copyright deber· ser discutido mediante nuestro correo de soporte:
+ * 4. Cualquier duda acerca de esta Noticia de Copyright deber√° ser discutido mediante nuestro correo de soporte:
  * soporte.omniblock@gmail.com
  */
 
-package net.omniblock.survival.hook;
+package net.omniblock.survival.utils;
 
-import me.clip.placeholderapi.external.EZPlaceholderHook;
-import net.omniblock.survival.base.SurvivalBankBase;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import java.io.File;
 
-@SuppressWarnings("deprecation")
-public class PAPIHook extends EZPlaceholderHook {
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.World;
 
-	public PAPIHook(Plugin plugin) {
-		super(plugin, "survival");
+public final class WorldUtils {
+
+	public static World getWorld(String name) {
+
+		for (World world : Bukkit.getWorlds()) {
+			if (world.getName() == name)
+				return world;
+		}
+		
+		return null;
 	}
-
-    @Override
-    public String onPlaceholderRequest(Player player, String identifier) {
-    	
-        // Placeholder: %survival_money%
-        if(identifier.equals("money"))
-        	return String.valueOf(SurvivalBankBase.getMoney(player));
-        
-        return "";
-        
-    }
 	
+	public static File getWorldFolder(World world){
+		
+		String path = Bukkit.getWorldContainer().getAbsolutePath() + world.getName();
+		File folder = new File(path);
+		
+		return folder;
+	}
+	
+	public static Location getLocation(String world, int x, int y , int z) {
+		return new Location(getWorld(world), x + 0.5, y, z + 0.5);
+	}
+	
+	public static Location getLocation(String world, int x, int y , int z, int yaw, int pitch) {
+		return new Location(getWorld(world), x + 0.5, y, z + 0.5, yaw, pitch);
+	}
 }

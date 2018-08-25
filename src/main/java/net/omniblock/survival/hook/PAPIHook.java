@@ -15,46 +15,44 @@
  *
  * Equipo de Desarrollo de Omniblock - Copyright (C) 2018 - Todos los Derechos Reservados
  *
- * 1. Este software no es un software de libre uso, no est· autorizado a leer, copiar, modificar, redistribuir
- * o alterar este archivo de ninguna manera sin la respectiva autorizaciÛn y consentimiento del
+ * 1. Este software no es un software de libre uso, no est√° autorizado a leer, copiar, modificar, redistribuir
+ * o alterar este archivo de ninguna manera sin la respectiva autorizaci√≥n y consentimiento del
  * Equipo de Desarrollo de Omniblock.
  *
  * 2. Si usted ha adquirido este archivo violando la clausula anterior descrita en esta Noticia de Copyright entonces
  * usted debe destruir este archivo de su unidad de disco duro o de cualquier otro dispositivo de almacenamiento.
  *
- * 3. Como se ha descrito en la cl·usula n˙mero uno, ningun tercero est· autorizado a leer, copiar, modificar,
- * redistribuir o alterar este archivo de ninguna manera sin la respectiva autorizaciÛn y consentimiento del
+ * 3. Como se ha descrito en la cl√°usula n√∫mero uno, ningun tercero est√° autorizado a leer, copiar, modificar,
+ * redistribuir o alterar este archivo de ninguna manera sin la respectiva autorizaci√≥n y consentimiento del
  * Equipo de Desarrollo de Omniblock.
  *
- * 4. Cualquier duda acerca de esta Noticia de Copyright deber· ser discutido mediante nuestro correo de soporte:
+ * 4. Cualquier duda acerca de esta Noticia de Copyright deber√° ser discutido mediante nuestro correo de soporte:
  * soporte.omniblock@gmail.com
  */
 
 package net.omniblock.survival.hook;
 
-import be.maximvdw.placeholderapi.PlaceholderAPI;
-import be.maximvdw.placeholderapi.PlaceholderReplaceEvent;
-import be.maximvdw.placeholderapi.PlaceholderReplacer;
-import net.omniblock.survival.SurvivalPlugin;
+import me.clip.placeholderapi.external.EZPlaceholderHook;
 import net.omniblock.survival.base.SurvivalBankBase;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
-public class MVdWHook {
+@SuppressWarnings("deprecation")
+public class PAPIHook extends EZPlaceholderHook {
 
-	public static void hook() {
-		
-		PlaceholderAPI.registerPlaceholder(SurvivalPlugin.getInstance(), "survival_money",
-				
-				new PlaceholderReplacer() {
-
-					@Override
-					public String onPlaceholderReplace(PlaceholderReplaceEvent e) {
-						return String.valueOf(SurvivalBankBase.getMoney(e.getPlayer()));
-					}
-					
-				}
-			
-			);
-		
+	public PAPIHook(Plugin plugin) {
+		super(plugin, "survival");
 	}
+
+    @Override
+    public String onPlaceholderRequest(Player player, String identifier) {
+    	
+        // Placeholder: %survival_money%
+        if(identifier.equals("money"))
+        	return String.valueOf(SurvivalBankBase.getMoney(player));
+        
+        return "";
+        
+    }
 	
 }
