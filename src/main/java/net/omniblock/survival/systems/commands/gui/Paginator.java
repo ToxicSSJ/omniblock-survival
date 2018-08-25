@@ -33,8 +33,8 @@
 package net.omniblock.survival.systems.commands.gui;
 
 import com.google.common.collect.Lists;
-import net.omniblock.network.library.helpers.inventory.InventoryBuilder;
-import net.omniblock.network.library.helpers.inventory.paginator.PaginatorStyle;
+import net.omniblock.dep.essentialsutils.inventory.InventoryBuilder;
+import net.omniblock.dep.essentialsutils.inventory.PaginatorStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 

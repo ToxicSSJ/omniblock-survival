@@ -32,7 +32,7 @@
 
 package net.omniblock.survival.systems.commands.gui;
 
-import net.omniblock.network.library.helpers.inventory.InventoryBuilder;
+import net.omniblock.dep.essentialsutils.inventory.InventoryBuilder;
 import org.bukkit.inventory.ItemStack;
 
 public class ItemGUI {

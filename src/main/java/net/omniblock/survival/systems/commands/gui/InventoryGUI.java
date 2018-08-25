@@ -32,9 +32,9 @@
 
 package net.omniblock.survival.systems.commands.gui;
 
-import net.omniblock.network.library.helpers.inventory.InventoryBuilder;
-import net.omniblock.network.library.helpers.inventory.paginator.InventorySlotter;
-import net.omniblock.network.library.helpers.inventory.paginator.PaginatorStyle;
+import net.omniblock.dep.essentialsutils.inventory.InventoryBuilder;
+import net.omniblock.dep.essentialsutils.inventory.InventorySlotter;
+import net.omniblock.dep.essentialsutils.inventory.PaginatorStyle;
 import net.omniblock.network.library.utils.TextUtil;
 import org.bukkit.entity.Player;
 
