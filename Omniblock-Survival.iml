@@ -108,6 +108,5 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: net.omniblock.dependencies:EssentialsUtils:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: net.omniblock.external:spigot:1.8.7-R0.1-SNAPSHOT" level="project" />
   </component>
 </module>
