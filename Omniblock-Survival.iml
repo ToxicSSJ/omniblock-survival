@@ -27,15 +27,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: net.omniblock.thirdparty:omniblock-modtools:latest">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../CompiledJars/Omniblock-ModTools.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: net.omniblock.thirdparty:omniblock-pvp:latest">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../CompiledJars/Omniblock-Pvp.jar!/" />

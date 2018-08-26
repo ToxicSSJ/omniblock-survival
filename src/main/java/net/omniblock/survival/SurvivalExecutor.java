@@ -32,18 +32,11 @@
 
 package net.omniblock.survival;
 
-import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
-import net.omniblock.packets.network.Packets;
-import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
-import net.omniblock.packets.network.structure.type.PacketSenderType;
-import net.omniblock.packets.object.external.ServerType;
 import net.omniblock.survival.base.SurvivalBankBase;
-import net.omniblock.survival.config.ConfigType;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;
 import net.omniblock.survival.utils.HelpUtil;
-import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -51,9 +44,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 public class SurvivalExecutor implements CommandExecutor {
 
@@ -105,8 +95,6 @@ public class SurvivalExecutor implements CommandExecutor {
 									player.sendMessage(TextUtil.format("&cNo puedes darte dinero a ti mismo."));
 									return true;
 								}
-
-								if(SpigotVanishAPI.getVanishedPlayers().contains(toPlayer)) continue;
 
 								SurvivalBankBase.removeMoney(player, moneyCache);
 								SurvivalBankBase.addMoney(toPlayer, moneyCache);

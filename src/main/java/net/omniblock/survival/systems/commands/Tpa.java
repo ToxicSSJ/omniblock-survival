@@ -36,7 +36,6 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.omniblock.modtools.api.SpigotVanishAPI;
 import net.omniblock.network.library.utils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.events.God;
@@ -100,8 +99,6 @@ public class Tpa implements CommandExecutor {
                             return true;
                         }
 
-                        if(SpigotVanishAPI.getVanishedPlayers().contains(toPlayer)) continue;
-
                         tpaRequest(player, toPlayer, true);
                         player.sendMessage(TextUtil.format(
                                 "&aSe ha enviado una petición de teletransporte a &a"+toPlayer.getName()));
@@ -133,8 +130,6 @@ public class Tpa implements CommandExecutor {
 							player.sendMessage(TextUtil.format("&cNo puedes enviarte peticiones a ti mismo."));
 							return true;
 						}
-
-						if(SpigotVanishAPI.getVanishedPlayers().contains(toPlayer)) continue;
 
 						tpaRequest(player, toPlayer, false);
 						player.sendMessage(TextUtil.format(

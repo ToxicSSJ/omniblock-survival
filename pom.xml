@@ -56,13 +56,6 @@
         </dependency>
         <dependency>
             <groupId>net.omniblock.thirdparty</groupId>
-            <artifactId>omniblock-modtools</artifactId>
-            <version>latest</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../CompiledJars/Omniblock-ModTools.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>net.omniblock.thirdparty</groupId>
             <artifactId>omniblock-pvp</artifactId>
             <version>latest</version>
             <scope>system</scope>
