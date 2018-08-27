@@ -163,15 +163,22 @@ public class SurvivalBankBase {
 		SurvivalPlugin instance = SurvivalPlugin.getInstance();
 		Database omnibase = instance.getOmnibaseDatabase();
 
-		MakeSQLUpdate msu = omnibase.makeSQLUpdate("survival_bank_data", MakeSQLUpdate.TableOperation.UPDATE);
-
-		msu.rowOperation("p_money", amount);
-		msu.whereOperation("p_id", playerUUID.toString());
-
 		try {
-			msu.execute();
+			SQLResultSet res = omnibase.makeSQLQuery("survival_bank_data").select("NULL").where("p_id", playerUUID.toString()).execute();
+			if(res.next()) {
+				MakeSQLUpdate msu = omnibase.makeSQLUpdate("survival_bank_data", MakeSQLUpdate.TableOperation.UPDATE);
+				msu.rowOperation("p_money", amount);
+				msu.whereOperation("p_id", playerUUID.toString());
+				msu.execute();
+			} else {
+				MakeSQLUpdate msu = omnibase.makeSQLUpdate("survival_bank_data", MakeSQLUpdate.TableOperation.INSERT);
+				msu.rowOperation("p_id", playerUUID.toString());
+				msu.rowOperation("p_money", amount);
+				msu.execute();
+			}
+
 			playerCache.put(playerUUID, amount);
-		} catch (IllegalArgumentException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
