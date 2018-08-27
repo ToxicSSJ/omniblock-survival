@@ -36,7 +36,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.events.God;
 import net.omniblock.survival.utils.HelpUtil;

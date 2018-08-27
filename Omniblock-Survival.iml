@@ -81,15 +81,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: net.omniblock.thirdparty:omniblock-network:latest">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../CompiledJars/Omniblock-Network.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Maven: net.omniblock.thirdparty:MVdWPlaceholderAPI:latest">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../Libs/MVdWPlaceholderAPI.jar!/" />
@@ -99,5 +90,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="Maven: net.omniblock.dependencies:EssentialsUtils:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: net.omniblock.dependencies:DatabaseUtils:1.0-SNAPSHOT" level="project" />
   </component>
 </module>

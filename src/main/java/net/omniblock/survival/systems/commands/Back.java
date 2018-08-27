@@ -32,7 +32,7 @@
 
 package net.omniblock.survival.systems.commands;
 
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

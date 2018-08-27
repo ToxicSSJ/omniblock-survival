@@ -34,6 +34,10 @@ package net.omniblock.survival;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import net.omniblock.dep.databaseutil.Database;
+import net.omniblock.dep.essentialsutils.TextUtil;
+import net.omniblock.dep.essentialsutils.cache.ExpirableCache;
+import net.omniblock.dep.essentialsutils.cache.PlayerCache;
 import net.omniblock.survival.hook.MVdWHook;
 import net.omniblock.survival.hook.PAPIHook;
 import net.omniblock.survival.systems.SurvivalListener;
@@ -42,17 +46,40 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.omniblock.network.handlers.Handlers;
-import net.omniblock.network.handlers.network.NetworkManager;
-import net.omniblock.packets.object.external.ServerType;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+
+import java.sql.SQLException;
 
 public class SurvivalPlugin extends JavaPlugin implements PluginMessageListener {
 
 	private static SurvivalPlugin instance;
+	private Database omnibaseDatabase;
+	private Database omniblockDatabase;
 
 	@Override
 	public void onEnable() {
+		ExpirableCache.init(this);
+		PlayerCache.init(this);
+		omnibaseDatabase = new Database("omniblock.net", 3306, "omniuser", "qc0g17lov0", "Omnibase");
+		omniblockDatabase = new Database("omniblock.net", 3306, "omniuser", "qc0g17lov0", "Omniblock");
+
+		if(!omnibaseDatabase.makeConnection()) {
+			setEnabled(false);
+			getServer().getConsoleSender().sendMessage(TextUtil.format("&cNO SE PUDO ESTABLECER CONEXION CON LA BASE DE DATOS, VERIFICAR DATOS EN EL ONENABLE() DE ESTE PLUGIN."));
+			return;
+		}
+
+		if(!omniblockDatabase.makeConnection()) {
+			try {
+				omnibaseDatabase.getConnection().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			setEnabled(false);
+			getServer().getConsoleSender().sendMessage(TextUtil.format("&cNO SE PUDO ESTABLECER CONEXION CON LA BASE DE DATOS, VERIFICAR DATOS EN EL ONENABLE() DE ESTE PLUGIN."));
+			return;
+		}
 		
 		instance = this;
 
@@ -94,5 +121,13 @@ public class SurvivalPlugin extends JavaPlugin implements PluginMessageListener 
 			// Use the code sample in the 'Response' sections below to read
 			// the data.
 		}
+	}
+
+	public Database getOmnibaseDatabase() {
+		return omnibaseDatabase;
+	}
+
+	public Database getOmniblockDatabase() {
+		return omniblockDatabase;
 	}
 }

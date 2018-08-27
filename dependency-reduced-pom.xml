@@ -32,6 +32,7 @@
               <artifactSet>
                 <includes>
                   <include>net.omniblock.dependencies:EssentialsUtils</include>
+                  <include>net.omniblock.dependencies:DatabaseUtils</include>
                 </includes>
               </artifactSet>
             </configuration>
@@ -95,13 +96,6 @@
       <version>latest</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/../Libs/Spigot_1_13_R1.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>net.omniblock.thirdparty</groupId>
-      <artifactId>omniblock-network</artifactId>
-      <version>latest</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/../CompiledJars/Omniblock-Network.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>net.omniblock.thirdparty</groupId>

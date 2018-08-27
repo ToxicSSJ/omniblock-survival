@@ -32,10 +32,10 @@
 
 package net.omniblock.survival.systems.commands.gui;
 
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.dep.essentialsutils.inventory.InventoryBuilder;
 import net.omniblock.dep.essentialsutils.inventory.InventorySlotter;
 import net.omniblock.dep.essentialsutils.inventory.PaginatorStyle;
-import net.omniblock.network.library.utils.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

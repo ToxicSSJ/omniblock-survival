@@ -32,7 +32,7 @@
 
 package net.omniblock.survival;
 
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.survival.base.SurvivalBankBase;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.gui.InventoryGUI;

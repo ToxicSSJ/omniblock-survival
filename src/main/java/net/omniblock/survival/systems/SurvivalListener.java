@@ -32,11 +32,10 @@
 
 package net.omniblock.survival.systems;
 
-import net.omniblock.survival.SurvivalManager;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.survival.SurvivalPlugin;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.events.God;
-import net.omniblock.survival.systems.events.MovementDistanceView;
 import net.omniblock.survival.utils.TitleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -45,8 +44,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import net.omniblock.network.library.utils.TextUtil;
-import net.omniblock.network.systems.ActionsPatcher;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -63,9 +60,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class SurvivalListener {
 
 	public static void listen() {
-
-		ActionsPatcher.setup();
-
 		PluginManager pm = Bukkit.getPluginManager();
 		pm.registerEvents(new Listener() {
 
@@ -87,13 +81,13 @@ public class SurvivalListener {
 
 								"",
 								"",
-								TextUtil.getCenteredMessage("&f Bienvenido/a a &a&lSURVIVAL &f" + e.getPlayer().getName() + "!"),
+								TextUtil.centerMessage("&f Bienvenido/a a &a&lSURVIVAL &f" + e.getPlayer().getName() + "!"),
 								"",
-								TextUtil.getCenteredMessage("&a&l(!) &aVisita nuestra web: &eomniblock.net"),
-								TextUtil.getCenteredMessage("&a&l(!) &aTienda: &etienda.omniblock.net"),
-								TextUtil.getCenteredMessage("&a&l(!) &aDiscord: &ediscord.gg/nYj6S2V"),
+								TextUtil.centerMessage("&a&l(!) &aVisita nuestra web: &eomniblock.net"),
+								TextUtil.centerMessage("&a&l(!) &aTienda: &etienda.omniblock.net"),
+								TextUtil.centerMessage("&a&l(!) &aDiscord: &ediscord.gg/nYj6S2V"),
 								"",
-								TextUtil.getCenteredMessage("&aAyuda: &b/ayuda"),
+								TextUtil.centerMessage("&aAyuda: &b/ayuda"),
 								""
 
 						});
@@ -130,7 +124,6 @@ public class SurvivalListener {
 
 		pm.registerEvents(new Back(), SurvivalPlugin.getInstance());
 		pm.registerEvents(new God(), SurvivalPlugin.getInstance());
-		pm.registerEvents(new MovementDistanceView(), SurvivalPlugin.getInstance());
 	}
 	
 }

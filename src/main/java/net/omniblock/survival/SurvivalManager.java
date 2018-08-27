@@ -32,21 +32,15 @@
 
 package net.omniblock.survival;
 
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.LocationUtil;
 import net.omniblock.shop.systems.MysteryBoxHandler;
+import net.omniblock.survival.config.ConfigType;
 import net.omniblock.survival.systems.SurvivalBox;
 import net.omniblock.survival.systems.commands.Back;
 import net.omniblock.survival.systems.commands.Tpa;
 import net.omniblock.survival.systems.commands.gui.RegisterGUI;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import net.omniblock.network.library.utils.LocationUtils;
-import net.omniblock.survival.config.ConfigType;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 
 /**
  * 
@@ -100,7 +94,7 @@ public class SurvivalManager {
 			
 			try {
 				
-				Location loc = LocationUtils.deserializeLocation(ConfigType.CONFIG.getConfig().getString("survival." +  "city" + ".location"));
+				Location loc = LocationUtil.fromStringUnsafe(ConfigType.CONFIG.getConfig().getString("survival." +  "city" + ".location"));
 				loc.setPitch(-3);
 				loc.setYaw(180);
 

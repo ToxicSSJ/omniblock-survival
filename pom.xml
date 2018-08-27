@@ -98,13 +98,6 @@
         </dependency>
         <dependency>
             <groupId>net.omniblock.thirdparty</groupId>
-            <artifactId>omniblock-network</artifactId>
-            <version>latest</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../CompiledJars/Omniblock-Network.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>net.omniblock.thirdparty</groupId>
             <artifactId>MVdWPlaceholderAPI</artifactId>
             <version>latest</version>
             <scope>system</scope>
@@ -113,6 +106,11 @@
         <dependency>
             <groupId>net.omniblock.dependencies</groupId>
             <artifactId>EssentialsUtils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.omniblock.dependencies</groupId>
+            <artifactId>DatabaseUtils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -147,6 +145,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>net.omniblock.dependencies:EssentialsUtils</include>
+                                    <include>net.omniblock.dependencies:DatabaseUtils</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

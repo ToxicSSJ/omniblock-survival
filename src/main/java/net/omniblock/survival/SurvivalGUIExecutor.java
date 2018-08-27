@@ -32,8 +32,8 @@
 
 package net.omniblock.survival;
 
-import net.omniblock.network.library.helpers.ItemBuilder;
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.ItemBuilder;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.packets.network.Packets;
 import net.omniblock.packets.network.structure.packet.PlayerSendToServerPacket;
 import net.omniblock.packets.network.structure.type.PacketSenderType;

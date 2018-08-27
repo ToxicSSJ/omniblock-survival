@@ -33,17 +33,15 @@
 package net.omniblock.survival.base;
 
 import java.sql.SQLException;
-import java.util.concurrent.TimeUnit;
+import java.util.UUID;
 
-import net.omniblock.network.library.utils.ExpirableCache;
+import net.omniblock.dep.databaseutil.Database;
+import net.omniblock.dep.databaseutil.make.MakeSQLQuery;
+import net.omniblock.dep.databaseutil.make.MakeSQLUpdate;
+import net.omniblock.dep.databaseutil.util.SQLResultSet;
+import net.omniblock.dep.essentialsutils.cache.PlayerCache;
+import net.omniblock.survival.SurvivalPlugin;
 import org.bukkit.entity.Player;
-
-import net.omniblock.network.handlers.base.sql.make.MakeSQLQuery;
-import net.omniblock.network.handlers.base.sql.make.MakeSQLUpdate;
-import net.omniblock.network.handlers.base.sql.make.MakeSQLUpdate.TableOperation;
-import net.omniblock.network.handlers.base.sql.type.TableType;
-import net.omniblock.network.handlers.base.sql.util.Resolver;
-import net.omniblock.network.handlers.base.sql.util.SQLResultSet;
 
 /**
  * 
@@ -56,7 +54,7 @@ import net.omniblock.network.handlers.base.sql.util.SQLResultSet;
  */
 public class SurvivalBankBase {
 
-	private static ExpirableCache<String, Integer> moneyCache = new ExpirableCache<>(10, TimeUnit.MINUTES);
+	private static PlayerCache<Integer> playerCache = new PlayerCache<>();
 
 	/**
 	 * 
@@ -68,51 +66,54 @@ public class SurvivalBankBase {
 	 * 
 	 */
 	public static int getMoney(Player player) {
-		return getMoney(player.getName(), false);
-	}
-
-	/**
-	 * 
-	 * Metodo est�tico para obtener el dinero
-	 * de un jugador, mediante su nombre.
-	 * 
-	 * @param name Nombre del jugador. 
-	 * @return Dinero del jugador.
-	 * 
-	 */
-	public static int getMoney(String name) {
-		return getMoney(name, false);
+		return getMoney(player.getUniqueId());
 	}
 	
 	/**
 	 * 
 	 * Metodo est�tico para obtener el dinero
 	 * de un jugador, mediante su NetworkID
-	 * 
-	 * @param param Nombre del jugador.
-	 * @param isNetworkID Si el nombre del jugador es el del networkID.
+	 *
 	 * @return Dinero del jugador.
 	 */
-	public static int getMoney(String param, boolean isNetworkID) {
-		String networkId = isNetworkID ? param : Resolver.getNetworkIDByName(param);
-
-		if(moneyCache.containsKey(networkId)) {
-			return moneyCache.get(networkId);
+	public static int getMoney(UUID playerUUID) {
+		if(playerCache.containsPlayer(playerUUID)) {
+			return playerCache.get(playerUUID);
 		}
 
-		MakeSQLQuery msq = new MakeSQLQuery(TableType.SURVIVAL_BANK_DATA)
+		String networkId = null;
+
+		try {
+			networkId = tryToResolveOldNetworkId(playerUUID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		}
+
+		SurvivalPlugin instance = SurvivalPlugin.getInstance();
+		Database omnibase = instance.getOmnibaseDatabase();
+
+		if(networkId != null) {
+			//intentar migrar
+			try {
+				tryToMigrate(networkId, playerUUID);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		}
+
+		MakeSQLQuery msq = omnibase.makeSQLQuery("survival_bank_data")
 				.select("p_money")
-				.where("p_id", networkId);
+				.where("p_id", playerUUID.toString());
 
 		try {
 			SQLResultSet sqr = msq.execute();
 			if (sqr.next()) {
 				int money = sqr.get("p_money");
-				moneyCache.put(networkId, money);
-
+				playerCache.put(playerUUID, money);
 				return money;
 			}
-			
 		} catch (IllegalArgumentException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -129,40 +130,47 @@ public class SurvivalBankBase {
 	 * @param amount Cantidad de dinero a dar.
 	 */
 	public static void setMoney(Player player, int amount) {
-		setMoney(player.getName(), amount, false);
-	}
-	
-	/**
-	 * 
-	 * Metodo est�tico para dar dinero a
-	 * un jugador, usando su nombre
-	 * 
-	 * @param name Nombre del jugador.
-	 * @param amount Cantidad de dinero a dar. 
-	 */
-	public static void setMoney(String name, int amount) {
-		setMoney(name, amount, false);
+		setMoney(player.getUniqueId(), amount);
 	}
 	
 	/**
 	 * 
 	 * Metodo est�tico  para dar dinero a 
 	 * un jugador, usando la NetworkID.
-	 * 
-	 * @param param Nombre del jugador.
+	 *
 	 * @param amount Cantidad de dinero.
-	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void setMoney(String param, int amount, boolean isNetworkID) {
-		String networkId = isNetworkID ? param : Resolver.getNetworkIDByName(param);
-		MakeSQLUpdate msu = new MakeSQLUpdate(TableType.SURVIVAL_BANK_DATA, TableOperation.UPDATE);
+	public static void setMoney(UUID playerUUID, int amount) {
+		String networkId = null;
+
+		try {
+			networkId = tryToResolveOldNetworkId(playerUUID);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		if(networkId != null) {
+			//probablemente usa el anterior sistema de network ids
+			try {
+				tryToMigrate(networkId, playerUUID);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+
+		SurvivalPlugin instance = SurvivalPlugin.getInstance();
+		Database omnibase = instance.getOmnibaseDatabase();
+
+		MakeSQLUpdate msu = omnibase.makeSQLUpdate("survival_bank_data", MakeSQLUpdate.TableOperation.UPDATE);
 
 		msu.rowOperation("p_money", amount);
-		msu.whereOperation("p_id", networkId);
+		msu.whereOperation("p_id", playerUUID.toString());
 
 		try {
 			msu.execute();
-			moneyCache.put(networkId, amount);
+			playerCache.put(playerUUID, amount);
 		} catch (IllegalArgumentException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -176,33 +184,19 @@ public class SurvivalBankBase {
 	 * @param amount Cantidad.
 	 */
 	public static void addMoney(Player player, int amount) {
-		addMoney(player.getName(), amount, false);
+		addMoney(player.getUniqueId(), amount);
 	}
 
 	/**
 	 * 
-	 * Metodo est�tico para a�adir dinero a
-	 * un jugador, usando su nombre.
-	 * 
-	 * @param name Nombre del jugador.
-	 * @param amount Cantidad de dinero a dar. 
-	 */
-	public static void addMoney(String name, int amount) {
-		addMoney(name, amount, false);
-	}
-	
-	/**
-	 * 
 	 * Metodo estatico  para añadir dinero a
 	 * un jugador, usando la NetworkID.
-	 * 
-	 * @param param Nombre del jugador.
+	 *
 	 * @param amount Cantidad de dinero.
-	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void addMoney(String param, int amount, boolean isNetworkID) {
-		int money = getMoney(param, isNetworkID);
-		setMoney(param, amount + money, isNetworkID);
+	public static void addMoney(UUID uuid, int amount) {
+		int money = getMoney(uuid);
+		setMoney(uuid, amount + money);
 	}
 	
 	/**
@@ -213,31 +207,45 @@ public class SurvivalBankBase {
 	 * @param amount Dinero que se va a remover.
 	 */
 	public static void removeMoney(Player player, int amount) {
-		removeMoney(player.getName(), amount, false);
+		removeMoney(player.getUniqueId(), amount);
 	}
 
 	/**
 	 * 
-	 * Metodo para remover dinero, usando el nombre 
-	 * del jugador.
-	 * 
-	 * @param name Nombre del jugador
-	 * @param amount Cantidad de dinero que se va a remover.
-	 */
-	public static void removeMoney(String name, int amount) {
-		removeMoney(name, amount, false);
-	}
-	
-	/**
-	 * 
 	 * Metodo para remover dinero, usando la NetworkID.
-	 * 
-	 * @param param Nombre del jugador.
+	 *
 	 * @param amount Cantidad de dinero a remover.
-	 * @param isNetworkID Si el nombre registrado es un NetworkID.
 	 */
-	public static void removeMoney(String param, int amount, boolean isNetworkID) {
-		int money = getMoney(param, isNetworkID);
-		setMoney(param, money - amount, isNetworkID);
+	public static void removeMoney(UUID uuid, int amount) {
+		int money = getMoney(uuid);
+		setMoney(uuid, money - amount);
+	}
+
+	private static String tryToResolveOldNetworkId(UUID playerUUID) throws SQLException {
+		SurvivalPlugin survivalPlugin = SurvivalPlugin.getInstance();
+		Database omnibase = survivalPlugin.getOmnibaseDatabase();
+
+		SQLResultSet res = omnibase.makeSQLQuery("uuid_resolver").select("p_resolver").where("p_offline_uuid", playerUUID.toString()).execute();
+		if(res.next()) {
+			return res.get("p_resolver");
+		} else {
+			res = omnibase.makeSQLQuery("uuid_resolver").select("p_resolver").where("p_online_uuid", playerUUID.toString()).execute();
+			if(res.next()) {
+				return res.get("p_resolver");
+			}
+		}
+
+		return null;
+	}
+
+	private static void tryToMigrate(String nid, UUID uuid) throws SQLException {
+		SurvivalPlugin instance = SurvivalPlugin.getInstance();
+		Database omnibase = instance.getOmnibaseDatabase();
+		SQLResultSet res = omnibase.makeSQLQuery("survival_bank_data").select("p_money").where("p_id", nid).execute();
+		if(res.next()) {
+			instance.getLogger().info("Migrando economía NID: " + nid + " a UUID: " + uuid);
+			omnibase.makeSQLUpdate("survival_bank_data", MakeSQLUpdate.TableOperation.UPDATE).rowOperation("p_id", uuid.toString()).whereOperation("p_id", nid).execute();
+			instance.getLogger().info("OK, economía migrada usando UUID en lugar de NID.");
+		}
 	}
 }

@@ -32,7 +32,7 @@
 
 package net.omniblock.survival.systems;
 
-import net.omniblock.network.library.utils.TextUtil;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import net.omniblock.shop.systems.box.MysteryBox;
 import net.omniblock.shop.systems.object.Element;
 import net.omniblock.survival.SurvivalManager;

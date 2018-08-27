@@ -36,8 +36,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.omniblock.network.library.utils.TextUtil;
-import net.omniblock.network.systems.CommandPatcher;
+import net.omniblock.dep.essentialsutils.TextUtil;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -58,10 +57,10 @@ public class HelpUtil {
 	 */
 	private static String[] utilidadesTop = new String[]{
 			"",
-			CommandPatcher.BAR,
-			TextUtil.getCenteredMessage(" &b&lUtilidades » &7¡Te ha fallado algún argumento!"),
-			TextUtil.getCenteredMessage(" &7Rercuerda que todos los datos deben estár puestos."),
-			TextUtil.getCenteredMessage(" &7El formato actual del comando es el siguiente:"),
+			"&8&l&m=============================================",
+			TextUtil.centerMessage(" &b&lUtilidades » &7¡Te ha fallado algún argumento!"),
+			TextUtil.centerMessage(" &7Rercuerda que todos los datos deben estár puestos."),
+			TextUtil.centerMessage(" &7El formato actual del comando es el siguiente:"),
 	};
 
 	/**
@@ -76,7 +75,7 @@ public class HelpUtil {
 		player.sendMessage(utilidadesTop);
 		player.spigot().sendMessage(cmdFormatComponent(format));
 		player.sendMessage(new String[]{
-			CommandPatcher.BAR,
+			"&8&l&m=============================================",
 					""
 		});
 	}
@@ -95,8 +94,8 @@ public class HelpUtil {
 		player.sendMessage(utilidadesTop);
 		player.spigot().sendMessage(cmdFormatComponent(format));
 		player.sendMessage(new String[]{
-				TextUtil.getCenteredMessage(" &bEjemplo:  &7"+example.replace("%player%", Names.randomName())),
-				CommandPatcher.BAR,
+				TextUtil.centerMessage(" &bEjemplo:  &7"+example.replace("%player%", Names.randomName())),
+				"&8&l&m=============================================",
 				""
 		});
 	}
@@ -106,7 +105,7 @@ public class HelpUtil {
 	private static TextComponent cmdFormatComponent(String format){
 		StringBuilder blankSpaces = new StringBuilder();
 		String cache = "Formato: " + format;
-		int spaces = TextUtil.getCenteredMessage(cache).length() - cache.length();
+		int spaces = TextUtil.centerMessage(cache).length() - cache.length();
 		for(int i = 0; i < spaces; i++)
 			blankSpaces.append(" ");
 

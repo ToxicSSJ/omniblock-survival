@@ -32,9 +32,9 @@
 
 package net.omniblock.survival.config;
 
+import net.omniblock.dep.essentialsutils.config.Config;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import net.omniblock.network.library.addons.configaddon.object.Config;
 import net.omniblock.survival.SurvivalPlugin;
 
 /**
